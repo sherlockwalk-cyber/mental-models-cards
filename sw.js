@@ -1,5 +1,5 @@
-/* Mental Models Cards — service worker (offline support) */
-const CACHE = "mental-models-v1";
+/* Customer Service Cards — service worker (offline support) */
+const CACHE = "cs-cards-v1";
 const ASSETS = [
   "./", "./index.html", "./app.js", "./cards.js", "./manifest.webmanifest",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/maskable-512.png",

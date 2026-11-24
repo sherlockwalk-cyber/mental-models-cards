@@ -1,7 +1,7 @@
 {
-  "name": "Mental Models Cards",
-  "short_name": "Mental Models",
-  "description": "Flash cards for ~100 mental models from physics, systems, economics, art, strategy and human nature.",
+  "name": "Customer Service Cards",
+  "short_name": "Service Cards",
+  "description": "Flash cards for 59 customer service tools and techniques, plus HEARD, LAST and other service frameworks.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
@@ -9,15 +9,15 @@
   "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "any",
   "background_color": "#F4F1EB",
-  "theme_color": "#1B2A33",
-  "categories": ["education", "productivity"],
+  "theme_color": "#1F3A3D",
+  "categories": ["education", "productivity", "business"],
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Shortcuts", "url": "./#shortcuts", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "What is a mental model?", "url": "./#what-is", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+    { "name": "I need to…", "url": "./#shortcuts", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "HEARD", "url": "./#heard", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
   ]
 }
