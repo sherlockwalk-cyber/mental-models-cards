@@ -184,7 +184,7 @@
     inner.innerHTML = `<div class="face front" style="--c:${col}">${frontHTML(c)}</div><div class="face back" style="--c:${col}">${backHTML(c)}</div>`;
     if (mode === "study") {
       $("#vCount").textContent = `${studyTotal - deck.length + 1} of ${studyTotal} · ${deck.length} left`;
-      $("#hint").textContent = "Recall how to do it, then flip to check.";
+      $("#hint").textContent = "Recall the steps, then flip to check.";
     } else {
       $("#vCount").textContent = `${idx + 1} / ${deck.length}`;
       $("#hint").textContent = "";
@@ -283,7 +283,7 @@
     if (!q.length) q = pool;
     q = shuffle(q); studyTotal = q.length;
     openViewer(q, q[0].id, "study");
-    const label = filter === "all" ? "all cards" : CAT[filter].name;
+    const label = filter === "all" ? "all pillars" : CAT[filter].name;
     toast(`Studying ${q.length} cards · ${label}`);
   }
   function answer(got) {

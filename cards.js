@@ -1,1118 +1,1264 @@
-/* Customer Service Cards — content
-   Based on notes from "Perfect Phrases for Customer Service" (59 tools and techniques),
-   rewritten and grouped for TAEPP Member Support. Frameworks (HEARD, LAST, service recovery,
-   customer effort) and general principles are added from wider service practice.
-   All example phrases are illustrative. Adapt them to your own voice and IAL policy. */
+/* Mental Models Cards — content
+   Based on "Mental Models: The Best Way to Make Intelligent Decisions (~100 Models Explained)" (Farnam Street).
+   All card text is paraphrased; "Use it" steps and "Watch out" notes are practical additions. */
 
 const DECK = {
-  name: "Customer Service Cards",
-  short: "Service Cards",
-  subtitle: "59 techniques + frameworks for member support",
-  storageKey: "cscards",
-  stepsHeading: "How to do it",
+  name: "Mental Models Cards",
+  short: "Mental Models",
+  subtitle: "~100 models for better decisions",
+  storageKey: "mmcards",
+  stepsHeading: "Use it",
   insightLabel: "Watch out",
-  questionLabel: "Use it when",
-  about: "Techniques rewritten from notes on <i>Perfect Phrases for Customer Service</i>. Frameworks (HEARD, LAST, service recovery, customer effort) and principles come from wider service practice. Example phrases are illustrative: adapt them to your voice and IAL policy.",
+  questionLabel: "Ask yourself",
+  about: "Content paraphrased from Farnam Street’s guide <i>Mental Models: The Best Way to Make Intelligent Decisions</i>. “Use it” steps, “Watch out” notes and Recipes are practical additions.",
   ways: [
-    ["contents", "Start here", "How the deck works and the order most conversations follow."],
-    ["shortcuts", "I need to…", "Match the situation in front of you to the right technique."],
-    ["recipes", "Playbooks", "Three techniques combined for a common tough situation."],
-    ["random", "Try your luck", "Draw a random technique and practise it today."]
+    ["contents", "Pick a discipline", "Browse the big ideas from eight fields, from physics to human nature."],
+    ["shortcuts", "Get straight to it", "Shortcuts match the problem in front of you to a model."],
+    ["recipes", "Build a latticework", "Recipes combine three models to tackle a bigger decision."],
+    ["random", "Try your luck", "Draw a random model and look for it in your day."]
   ],
-  featured: "how-to",
-  searchNoun: "techniques",
-  combineNoun: "techniques"
+  featured: "what-is",
+  searchNoun: "models",
+  combineNoun: "models"
 };
 
 const CATEGORIES = [
-  { id: "start",    name: "Start Here",                 color: "#5B6B75", blurb: "How to use this deck, and shortcuts by situation." },
-  { id: "recipe",   name: "Playbook",                   color: "#1B1B1B", blurb: "Three techniques combined for a common tough situation." },
-  { id: "listen",   name: "Listen & Understand",        color: "#2F5FA8", blurb: "Find out what the customer actually needs." },
-  { id: "defuse",   name: "Defuse Emotions",            color: "#1F7A6F", blurb: "Lower the temperature before solving anything." },
-  { id: "redirect", name: "Redirect & Take Control",    color: "#5E6B2E", blurb: "Steer the conversation back to the problem." },
-  { id: "words",    name: "Words & Tone",               color: "#A6822A", blurb: "Choose words that land well." },
-  { id: "courtesy", name: "Courtesy & Rapport",         color: "#C2577E", blurb: "Show the customer they matter." },
-  { id: "body",     name: "Body Language & Space",      color: "#7A4C9A", blurb: "What you show without speaking." },
-  { id: "inform",   name: "Inform & Advise",            color: "#2F8AA0", blurb: "Help the customer understand what is happening and what they can do." },
-  { id: "solve",    name: "Solve & Go Further",         color: "#B8641E", blurb: "Act on the problem and show the effort." },
-  { id: "limit",    name: "Limit, Separate & Escalate", color: "#A23B32", blurb: "When other techniques fail, protect people and the process." },
-  { id: "close",    name: "Follow Up & Close",          color: "#4E8A2E", blurb: "Finish what you promised and end on a positive note." },
-  { id: "frame",    name: "Frameworks & Principles",    color: "#6B5B4E", blurb: "Wider ideas from service practice and research." }
+  { id: "start",    name: "Start Here",              color: "#5B6B75", blurb: "What mental models are and how to use this deck." },
+  { id: "recipe",   name: "Recipe",                  color: "#1B1B1B", blurb: "Three models combined into a latticework for a bigger decision." },
+  { id: "general",  name: "General Thinking",        color: "#2F5FA8", blurb: "Core tools that sharpen every other model." },
+  { id: "science",  name: "Physics, Chemistry & Biology", color: "#1F7A6F", blurb: "Laws of the natural world as lenses for life and work." },
+  { id: "systems",  name: "Systems",                 color: "#5B8A2B", blurb: "How parts interact, grow, break and balance." },
+  { id: "math",     name: "Mathematics",             color: "#A6822A", blurb: "Numeracy for judging odds, samples and extremes." },
+  { id: "econ",     name: "Economics",               color: "#B8641E", blurb: "Choices under scarcity, markets and trade-offs." },
+  { id: "art",      name: "Art",                     color: "#B2433A", blurb: "How stories, framing and performance shape perception." },
+  { id: "military", name: "Military & Strategy",     color: "#5E6B2E", blurb: "Competing when the stakes are high." },
+  { id: "human",    name: "Human Nature & Judgment", color: "#7A4C9A", blurb: "The biases and instincts that bend our thinking." }
 ];
 
 const ICONS = {
   start:    '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
   recipe:   '<path d="M4 7l8-4 8 4-8 4zM4 12l8 4 8-4M4 17l8 4 8-4"/>',
-  listen:   '<path d="M7 9a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.6 1.4"/><path d="M10 9a2 2 0 0 1 4 0"/>',
-  defuse:   '<path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/>',
-  redirect: '<path d="M4 18V9a4 4 0 0 1 4-4h10"/><path d="M14 1l4 4-4 4"/>',
-  words:    '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
-  courtesy: '<path d="M3 12l4-4 3 3 4-4 7 7"/><path d="M7 16l3 3 4-4"/>',
-  body:     '<circle cx="12" cy="5" r="2.5"/><path d="M12 8v7M8 11h8M9 21l3-6 3 6"/>',
-  inform:   '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
-  solve:    '<path d="M14.7 6.3a4 4 0 0 0-5.3 5.3L3 18l3 3 6.4-6.4a4 4 0 0 0 5.3-5.3l-2.6 2.6-2.4-.6-.6-2.4z"/>',
-  limit:    '<path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><path d="M8 12h8"/>',
-  close:    '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
-  frame:    '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'
+  general:  '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/>',
+  science:  '<circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-60 12 12)"/>',
+  systems:  '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.5 6h7M7.2 8.2l3.6 7.6M16.8 8.2l-3.6 7.6"/>',
+  math:     '<path d="M18 5H6l6 7-6 7h12"/>',
+  econ:     '<path d="M4 20V4M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/>',
+  art:      '<path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.9 0-1-.9-1.4-.9-2.4 0-1 .9-1.7 2-1.7h2a4 4 0 0 0 4-4C21.1 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+  military: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 7v10M8 11h8"/>',
+  human:    '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>'
 };
 
 const CARDS = [
   /* ================= START HERE ================= */
-  { id: "how-to", cat: "start", title: "How to Use This Deck",
-    tagline: "59 techniques in 10 groups, plus frameworks and playbooks.",
-    desc: "Most good conversations follow the same order: listen, defuse, redirect, inform, solve, then follow up and close. Limits and escalation sit outside that order. Use them only when the other techniques have failed, or at once if safety is at risk.",
+  { id: "what-is", cat: "start", title: "What Is a Mental Model?",
+    tagline: "A simplified explanation of how something works.",
+    desc: "Like a map, a mental model keeps the essential and drops the noise. Collect the big ideas from many disciplines and you can see problems from angles others miss.",
     steps: [
-      "<b>Learn a card:</b> read the front, try to recall how to do it, then flip to check.",
-      "<b>Study mode:</b> tap Study, then mark each card Got it or Again.",
-      "<b>In the moment:</b> open [[shortcuts|I need to…]] and match the situation to a technique.",
-      "<b>Combine:</b> real conversations need several techniques. See the Playbook cards.",
-      "<b>In writing:</b> body-language and voice cards have no direct email version. Get the same effect with structure, word choice and specific thanks."
+      "<b>Learn the model:</b> read the front, then recall the back before you flip.",
+      "<b>Spot it in the wild:</b> look for one model at work in your day.",
+      "<b>Combine models:</b> real decisions need several lenses. See the <i>Recipe</i> cards.",
+      "<b>Check its limits:</b> every model breaks somewhere. Read the ‘Watch out’ box."
     ],
-    insight: "Example phrases are illustrative. Adapt them to your own voice and to IAL policy before using them with members.",
-    related: ["shortcuts", "heard", "last"] },
+    insight: "One model used everywhere is a hammer looking for nails. The value comes from a latticework of many models that check each other.",
+    related: ["shortcuts", "map-territory"] },
 
-  { id: "shortcuts", cat: "start", title: "I Need to…",
-    tagline: "Match the situation in front of you to a technique.",
-    desc: "Flip for common situations and the techniques that help most.",
+  { id: "shortcuts", cat: "start", title: "Shortcuts",
+    tagline: "Match the problem in front of you to a model.",
+    desc: "Flip for situations and the models that help most.",
     steps: [
-      "<b>Calm an angry person.</b> [[venting|Allow venting]], [[empathy|Empathy statements]], then [[refocus|Refocus]]",
-      "<b>Stop a rant.</b> [[neutral-mode|Some people think that]] or [[when-q|When question]]",
-      "<b>Say no.</b> [[level|Level]], [[positive-no|Say what you can do]] and [[alternatives|Provide alternatives]]",
-      "<b>Deliver bad news.</b> [[preemptive|Preemptive strike]] and [[explain-actions|Explain reasoning]]",
-      "<b>Handle abuse.</b> [[no-bait|Not taking the bait]], [[set-limits|Set limits]], [[disengage|Disengage]]",
-      "<b>Fix our own error.</b> [[admit|Admit mistakes]], [[expedite|Expedite]], [[finish-fu|Finish off / follow up]]",
-      "<b>Make someone feel in control.</b> [[choices|Offering choices]] and [[pros-cons|Pros and cons]]",
-      "<b>Hand over a case.</b> [[supervisor|Refer to supervisor]] and [[fcr|No re-explaining]]",
-      "<b>End well.</b> [[summarise|Summarise]], [[takeaway|Customer takeaway]], [[close-positive|Close positively]]"
+      "<b>I’m about to make a big decision.</b> [[second-order|Second-Order Thinking]] or [[inversion|Inversion]]",
+      "<b>I’m out of my depth.</b> [[circle|Circle of Competence]] or [[map-territory|Map Is Not the Territory]]",
+      "<b>Someone wronged me.</b> [[hanlon|Hanlon’s Razor]] or [[fae|Fundamental Attribution Error]]",
+      "<b>Things are stuck.</b> [[bottlenecks|Bottlenecks]] or [[activation-energy|Activation Energy]]",
+      "<b>People aren’t doing what I expect.</b> [[incentives|Incentives]] or [[social-proof|Social Proof]]",
+      "<b>A result looks amazing.</b> [[regression|Regression to the Mean]] or [[survivorship|Survivorship Bias]]",
+      "<b>Everyone says it’s a sure thing.</b> [[bubbles|Bubbles]] or [[confirmation|Confirmation Bias]]",
+      "<b>I can’t change a habit.</b> [[inertia|Inertia]] or [[setting|Setting]]",
+      "<b>I need to persuade.</b> [[framing|Framing]] or [[audience|Audience]]"
     ],
-    related: ["how-to"] },
+    related: ["what-is"] },
 
-  /* ================= PLAYBOOKS ================= */
-  { id: "r-angry", cat: "recipe", title: "The Angry Caller",
-    tagline: "A member is shouting about a renewal stuck for three weeks.",
-    desc: "Problem-solving too early fails: the member ignores your fix because they don’t feel heard yet. Lower the temperature first, then move to action.",
-    combine: ["venting", "empathy", "refocus"],
+  /* ================= RECIPES ================= */
+  { id: "r-decide", cat: "recipe", title: "Before a Big Decision",
+    tagline: "Avoid the obvious failure, see the ripple effects, and leave room for being wrong.",
+    desc: "Most bad decisions fail in predictable ways: nobody asked what could go wrong, nobody looked past the first effect, and nothing was held in reserve.",
+    combine: ["inversion", "second-order", "margin-safety"],
     stepText: [
-      "Let them finish without interrupting. Short signals only.",
-      "Name the feeling and its source, then say sorry for the impact.",
-      "In the same breath, steer to what you can do today."
+      "List what would guarantee failure, then design those out.",
+      "For each option ask ‘and then what?’ two or three times.",
+      "Size a buffer for being wrong: time, money or capacity."
     ],
-    result: "A calmer member who is listening to the fix instead of fighting you." },
+    result: "A decision that survives surprises and still looks good a year from now." },
 
-  { id: "r-decline", cat: "recipe", title: "Saying No in Writing",
-    tagline: "Declining a request that falls outside the criteria, by email.",
-    desc: "A bare refusal feels like a wall. A clear reason, a real alternative and a route to review keep trust even when the answer is no.",
-    combine: ["level", "alternatives", "arrange-fu"],
+  { id: "r-stuck", cat: "recipe", title: "Unstick a System",
+    tagline: "Find out why a team or process isn’t moving and fix the real constraint.",
+    desc: "Pushing harder on a stuck system usually fails. Find the constraint, understand what reinforces it, and check what people are actually rewarded for.",
+    combine: ["bottlenecks", "feedback-loops", "incentives"],
     stepText: [
-      "State the decision honestly and firmly, with the reason and no blame.",
-      "Set out the options that are still open.",
-      "Say what happens next and by when."
+      "Locate the slowest step that limits everything else.",
+      "Map the loops that keep the current behaviour in place.",
+      "Check whether incentives reward the outcome you want."
     ],
-    result: "A firm no the member understands, with a way forward." },
+    result: "Effort aimed at the one change that moves the whole system." },
 
-  { id: "r-abuse", cat: "recipe", title: "The Abusive Customer",
-    tagline: "Someone starts swearing at you at the counter or on the phone.",
-    desc: "Your job is to stay calm, give them a fair chance to change, and protect yourself and others if they don’t.",
-    combine: ["no-bait", "set-limits", "disengage"],
+  { id: "r-debias", cat: "recipe", title: "Debias Your Judgment",
+    tagline: "Stress-test a belief before you bet on it.",
+    desc: "The mind grabs the first conclusion, seeks support for it and learns from winners only. Three checks break that chain.",
+    combine: ["confirmation", "representativeness", "survivorship"],
     stepText: [
-      "Ignore the insults and keep speaking to the problem.",
-      "Name the behaviour, the consequence and the choice: “It’s up to you.”",
-      "If it continues, take a short break or end the contact per policy."
+      "Write what evidence would prove you wrong, then go and look for it.",
+      "Check the base rate: how often does this usually happen?",
+      "Ask who tried the same thing and failed, and why you don’t hear about them."
     ],
-    result: "Control of the conversation, with your dignity and safety intact." },
+    result: "A belief held with the right level of confidence." },
 
-  { id: "r-queue", cat: "recipe", title: "A Queue Is Building",
-    tagline: "The helpdesk is busy and people are waiting.",
-    desc: "Waiting feels longer when it is unexplained and when people feel stuck. Information and options make the same wait feel shorter.",
-    combine: ["waiting", "choices", "thanks"],
+  { id: "r-habit", cat: "recipe", title: "Start a New Habit",
+    tagline: "Make change easy to start and hard to stop.",
+    desc: "Habits are physics: the status quo resists, starting costs energy, and the environment keeps pulling you back.",
+    combine: ["activation-energy", "inertia", "setting"],
     stepText: [
-      "Explain the reason and the likely wait, and suggest what they can do meanwhile.",
-      "Offer a choice: wait, or receive the answer by email later.",
-      "Thank them specifically for their patience."
+      "Shrink the first step until starting is almost free.",
+      "Repeat daily to build momentum so the habit carries itself.",
+      "Redesign your surroundings so the new habit is the default."
     ],
-    result: "Calmer customers who chose how to spend their wait." },
+    result: "A habit that runs on momentum instead of willpower." },
 
-  { id: "r-error", cat: "recipe", title: "We Made the Mistake",
-    tagline: "A member missed a deadline because we gave the wrong date.",
-    desc: "When the fault is ours, speed and honesty matter more than anything. Name it first, fix it fast, and check back.",
-    combine: ["preemptive", "admit", "finish-fu"],
+  { id: "r-hype", cat: "recipe", title: "Judge a Hot Trend",
+    tagline: "Separate real value from crowd enthusiasm.",
+    desc: "When everyone is excited, prices and opinions drift away from fundamentals. Three lenses bring you back to reality.",
+    combine: ["social-proof", "bubbles", "regression"],
     stepText: [
-      "Raise the problem before they do.",
-      "Own the error plainly, without excuses, and say what you have done.",
-      "Check back later that the fix worked."
+      "Notice how much of your interest comes from other people’s interest.",
+      "Compare the story with the underlying value.",
+      "Expect extreme results to drift back toward average."
     ],
-    result: "A member who trusts you more because of how you handled the error." },
+    result: "Participation on your own terms, or a calm decision to sit out." },
 
-  { id: "r-bad-news", cat: "recipe", title: "Delivering Bad News",
-    tagline: "An appeal was rejected or a waiver can’t be granted.",
-    desc: "People accept hard outcomes better when they understand the reasons and feel the process was fair.",
-    combine: ["explain-actions", "softeners", "fairness"],
+  { id: "r-people", cat: "recipe", title: "Read People Fairly",
+    tagline: "Respond to others’ behaviour without paranoia or naivety.",
+    desc: "We over-blame character, assume malice and ignore the pressures people are under. Three models correct for that.",
+    combine: ["hanlon", "fae", "incentives"],
     stepText: [
-      "Explain how and why the decision was made.",
-      "Avoid absolute, harsh wording while staying clear.",
-      "Show the criteria were applied consistently and how to request a review."
-    ],
-    result: "An unwelcome decision the member sees as fair." },
-
-  /* ================= 1. LISTEN & UNDERSTAND ================= */
-  { id: "active-listening", cat: "listen", title: "Active Listening",
-    tagline: "Reflect back what you heard, often as a question.",
-    desc: "Restate the key points of what the customer said and check them. It proves you heard and catches misunderstandings early.",
-    question: "At the start of any contact, and whenever the issue is complicated or emotional.",
-    steps: [
-      "Pick out the two or three key facts the customer gave.",
-      "Restate them in your own words.",
-      "End with a check: “Is that right?”"
-    ],
-    example: "“So the renewal went through on your side, but your status still shows as pending. Is that right?”",
-    insight: "Don’t parrot their exact words back. It sounds mechanical. Rephrase.",
-    related: ["summarise", "ack-needs"] },
-
-  { id: "ack-needs", cat: "listen", title: "Acknowledge Customer’s Needs",
-    tagline: "Say out loud what the customer needs.",
-    desc: "Rephrase something they told you, or respond to something you notice about them, such as a worried tone or a deadline they mentioned.",
-    question: "Early on, before you explain or defend anything.",
-    steps: [
-      "Listen for the underlying need, not only the request.",
-      "Name it back in one sentence.",
-      "Use it to guide what you do next."
-    ],
-    example: "“It sounds like the most important thing for you is a confirmed date before Friday.”",
-    insight: "Acknowledging a need is not promising to meet it. Be careful not to imply a guarantee.",
-    related: ["active-listening", "probing"] },
-
-  { id: "probing", cat: "listen", title: "Ask Probing Questions",
-    tagline: "Move from broad to specific to find the real issue.",
-    desc: "Instead of a vague opener, make a short observation, then ask a narrower question. Each answer guides the next question.",
-    question: "The request is unclear, or the first words aren’t the real issue.",
-    steps: [
-      "Start with an observation about what you can see.",
-      "Ask one focused question.",
-      "Narrow further based on the answer."
-    ],
-    example: "“I see you’ve opened the appeal form. Is it about the CPD hours or the deadline?” Then: “Which period are you looking at?”",
-    insight: "A string of questions can feel like an interrogation. Explain why you’re asking.",
-    related: ["active-listening", "explain-actions"] },
-
-  { id: "summarise", cat: "listen", title: "Summarise the Conversation",
-    tagline: "Confirm you both understood the same thing.",
-    desc: "Briefly restate what has been said and agreed, so both sides leave with the same picture.",
-    question: "After a long or tangled exchange, before ending, and before handing over.",
-    steps: [
-      "List the key facts and what was agreed.",
-      "Ask if you’ve missed anything.",
-      "Confirm the next step and who owns it."
-    ],
-    example: "“Let me check I have this right: your certificate expired in March, you sent proof last week, and you need written confirmation. Have I missed anything?”",
-    insight: "A summary that leaves out the customer’s main concern does more harm than no summary.",
-    related: ["active-listening", "teach-back", "takeaway"] },
-
-  { id: "phone-silence", cat: "listen", title: "Telephone Silence",
-    tagline: "Use deliberate pauses; avoid unexplained ones.",
-    desc: "A short pause lets the customer finish, lets emotion pass, or invites them to say more. But unexplained silence while you work feels like being ignored.",
-    question: "After the customer finishes a long account, and any time you need to look something up.",
-    steps: [
-      "Pause a beat before replying to a long or emotional account.",
-      "If you need time, say what you’re doing and how long it will take.",
-      "Give short updates during longer checks."
-    ],
-    example: "“Take your time, I’m listening.” While checking: “I’m pulling up your record now. This will take about a minute.”",
-    insight: "In email, the equivalent of silence is no reply. Send a holding reply rather than leave someone waiting.",
-    related: ["venting", "explain-actions"] },
-
-  /* ================= 2. DEFUSE EMOTIONS ================= */
-  { id: "empathy", cat: "defuse", title: "Empathy Statements",
-    tagline: "Name the emotion and its source.",
-    desc: "Say what they feel and why: “frustrated about the delay.” Avoid vague lines like “I see where you’re coming from,” which tell the customer nothing.",
-    question: "The customer shows anger, worry, disappointment or confusion.",
-    steps: [
-      "Identify the feeling: frustration, worry, upset.",
-      "Identify the cause: the delay, the form, the error.",
-      "Put both in one short sentence."
-    ],
-    example: "“I can hear how frustrating it’s been to wait three weeks without an update.”",
-    insight: "Empathy is not agreement. You can recognise the feeling without accepting their facts.",
-    related: ["empathy-not-agree", "ack-no-encourage", "apologise"] },
-
-  { id: "apologise", cat: "defuse", title: "Apologise",
-    tagline: "Say sorry for the impact, whoever caused it.",
-    desc: "An apology does not automatically mean accepting responsibility. You can be sorry for the experience even when the cause is unclear or outside your control.",
-    question: "Something went wrong for the customer.",
-    steps: [
-      "Apologise for the specific impact, not with a generic “sorry for any inconvenience”.",
-      "Keep it short and sincere.",
-      "Move straight to what happens next."
-    ],
-    example: "“I’m sorry this has caused you so much stress.” (If the fault is ours: “I’m sorry we sent you the wrong date.”)",
-    insight: "Repeated or over-long apologies sound defensive. One clear apology is enough.",
-    related: ["admit", "empathy", "heard"] },
-
-  { id: "admit", cat: "defuse", title: "Admit Mistakes",
-    tagline: "When we got it wrong, say so plainly.",
-    desc: "Own the error without excuses or blame-shifting, and move straight to the fix. Honesty here builds more trust than any defence.",
-    question: "You’ve checked the facts and the error is ours.",
-    steps: [
-      "Confirm the facts first.",
-      "State the mistake in one plain sentence.",
-      "Say what you have already done or will do to fix it."
-    ],
-    example: "“The reminder went to your old email address. That was our error. I’ve updated your record and resent it just now.”",
-    insight: "Don’t take blame the evidence doesn’t support. Apologise for the impact instead.",
-    related: ["apologise", "preemptive", "recovery-paradox"] },
-
-  { id: "venting", cat: "defuse", title: "Allow Venting",
-    tagline: "Let them get it all out without interrupting.",
-    desc: "Most angry customers are ordinary people who are upset for the moment. They can’t hear solutions until they feel heard.",
-    question: "The customer is angry and talking at length.",
-    steps: [
-      "Stay quiet, apart from short signals: “Mm-hm,” “I see.”",
-      "Wait until they slow down.",
-      "Thank them for explaining, then ask your first question."
-    ],
-    example: "“Thank you for explaining all of that. May I ask a couple of questions?”",
-    insight: "If they ignore your suggestions and you keep repeating yourself, you started solving too early.",
-    related: ["empathy", "ack-no-encourage", "timing"] },
-
-  { id: "ack-no-encourage", cat: "defuse", title: "Acknowledge Without Encouraging",
-    tagline: "One sentence on the feeling, then straight to the problem.",
-    desc: "Acknowledge the feeling briefly and, without stopping, steer back to the problem. Dwelling on emotion feeds it.",
-    question: "The customer keeps returning to how upset they are.",
-    steps: [
-      "Acknowledge the feeling in one short sentence.",
-      "Don’t pause after it.",
-      "Bridge immediately to an action."
-    ],
-    example: "“I understand you’re upset about the delay. Let’s look at what we can do today.”",
-    insight: "Pausing after the acknowledgement invites another round of venting.",
-    related: ["refocus", "empathy"] },
-
-  { id: "youre-right", cat: "defuse", title: "You’re Right!",
-    tagline: "Honest, emphatic agreement that stops a rant.",
-    desc: "An angry customer expects an argument. Agreeing with a point that is true surprises them, often leaves them with nothing to say, and opens the door for other techniques.",
-    question: "The customer makes a point that is actually true.",
-    steps: [
-      "Find the part of their complaint that is fair.",
-      "Agree with it clearly and without hedging.",
-      "Follow with what you’ll do about it."
-    ],
-    example: "“You’re right. You should have heard from us before the deadline, not after it.”",
-    insight: "Never agree with something false to calm someone down. It creates a promise you can’t keep.",
-    related: ["agreement", "admit"] },
-
-  { id: "agreement", cat: "defuse", title: "Find Agreement Points",
-    tagline: "Build a sense of “we’re in it together.”",
-    desc: "Look for things you can honestly agree on. A technique used in hostage negotiation, it turns an argument into shared work.",
-    question: "The conversation feels adversarial.",
-    steps: [
-      "Listen for a goal you share.",
-      "Name it out loud.",
-      "Use it as the starting point for the solution."
-    ],
-    example: "“We both want this sorted out before the audit date, so let’s work backwards from there.”",
-    insight: "Agreeing on goals is safe. Be careful agreeing on facts until you’ve checked them.",
-    related: ["youre-right", "face-saving"] },
-
-  { id: "face-saving", cat: "defuse", title: "Face-Saving Out",
-    tagline: "Give them a graceful way to change course.",
-    desc: "People dig in when backing down means losing face. Offer a way out that keeps their dignity intact.",
-    question: "The customer made a mistake or took a hard line and now needs a dignified exit.",
-    steps: [
-      "Spot when someone needs to back down.",
-      "Point to something outside them: the form, the timing, the wording.",
-      "Move on quickly without dwelling on it."
-    ],
-    example: "“The two dates are easy to mix up. The form doesn’t make it obvious. Let’s use the corrected one.”",
-    insight: "Never say “I told you so,” even politely. It removes the exit you just offered.",
-    related: ["agreement", "question-state"] },
-
-  /* ================= 3. REDIRECT & TAKE CONTROL ================= */
-  { id: "refocus", cat: "redirect", title: "Refocus",
-    tagline: "Steer back to the problem and what can be done.",
-    desc: "After acknowledging the emotion, move the conversation to the next action. It is the second half of [[ack-no-encourage|Acknowledge without encouraging]].",
-    question: "The conversation drifts into the past, other issues, or feelings.",
-    steps: [
-      "Acknowledge briefly.",
-      "Name the most useful next step.",
-      "Ask a question that requires a decision or a fact."
-    ],
-    example: "“That sounds frustrating. What would help most right now is the corrected letter. Shall I send it today?”",
-    insight: "Refocusing too early, before they feel heard, sounds like brushing them off.",
-    related: ["ack-no-encourage", "broken-record"] },
-
-  { id: "broken-record", cat: "redirect", title: "Broken Record",
-    tagline: "Repeat the message calmly, in different words.",
-    desc: "Restate your main point until the customer starts to engage. Stay polite and don’t get pulled into side arguments.",
-    question: "The customer keeps repeating a demand or ignores your options.",
-    steps: [
-      "Decide the one message that matters.",
-      "Repeat it, rephrased each time.",
-      "Keep your tone even and end with a choice."
-    ],
-    example: "“You have several options. [Describe them.] Which would you prefer?” Then: “Which of those would work best for you?”",
-    insight: "Repeating the exact same words sounds robotic and can inflame. Vary the wording.",
-    related: ["refocus", "choices"] },
-
-  { id: "neutral-mode", cat: "redirect", title: "Some People Think That",
-    tagline: "Neutral mode: respond to an attack without arguing.",
-    desc: "Restate the customer’s claim neutrally with the fixed phrase “Some people do think that…”. The form matters. They usually reply briefly and stop, then you follow with empathy and a refocus.",
-    question: "The customer is making aggressive or exaggerated claims.",
-    steps: [
-      "Say: “Some people do think that [their claim, stated plainly].”",
-      "Let them respond briefly.",
-      "Follow with an [[empathy|Empathy statement]] and [[refocus|Refocus]]."
-    ],
-    example: "“Some people do think that the process is deliberately slow.” Then: “That’s frustrating. Let’s see how I can move your case along.”",
-    insight: "Don’t change the wording or add sarcasm. It only works when it sounds completely neutral.",
-    related: ["when-q", "empathy", "refocus"] },
-
-  { id: "when-q", cat: "redirect", title: "When Question",
-    tagline: "“When did you start thinking that…?”",
-    desc: "Ask when they started thinking a key point they made. It forces them to stop and think, which interrupts the flow of angry speech.",
-    question: "A rant is building and you need to break its momentum.",
-    steps: [
-      "Pick a key point from what they said.",
-      "Summarise it neutrally.",
-      "Ask: “When did you start thinking that…?”"
-    ],
-    example: "“When did you start thinking that the renewal had been rejected?”",
-    insight: "Tone is everything. Asked with an edge, it sounds like a challenge.",
-    related: ["neutral-mode", "probing"] },
-
-  { id: "distract", cat: "redirect", title: "Distract",
-    tagline: "Shift attention to something neutral so the peak passes.",
-    desc: "Gently move attention to a form, a seat, a glass of water or a different question, so the emotional peak can pass.",
-    question: "Anger is high and logic isn’t landing yet.",
-    steps: [
-      "Offer something practical or comforting.",
-      "Give them a small, easy task.",
-      "Return to the issue once they settle."
-    ],
-    example: "“Would you like to sit down while I pull up your file? Then you can tell me the reference number.”",
-    insight: "Distraction must not look like avoidance. Come back to the issue quickly.",
-    related: ["timing", "refocus"] },
-
-  { id: "no-bait", cat: "redirect", title: "Not Taking the Bait",
-    tagline: "Don’t respond to insults or provocation.",
-    desc: "Ignore insults, sarcasm and abuse. Don’t let an unpleasant customer ruin your day, and don’t lower yourself to their level.",
-    question: "Remarks become personal or provocative.",
-    steps: [
-      "Let the remark pass without comment.",
-      "Keep your voice level.",
-      "Speak only to the problem."
-    ],
-    example: "(Ignore “You people are useless.”) “I’d like to get this resolved. Could you give me the application reference?”",
-    insight: "Ignoring insults has limits. If abuse continues, move to [[set-limits|Set limits]].",
-    related: ["set-limits", "refocus"] },
-
-  { id: "preemptive", cat: "redirect", title: "Preemptive Strike",
-    tagline: "Name the problem before they do.",
-    desc: "Raising the issue first shows you understand their concern and aren’t hiding from it. It takes the heat out before it builds.",
-    question: "You know the customer is likely to be upset: a delay, a refusal, a known error.",
-    steps: [
-      "Open by naming the problem.",
-      "Acknowledge its impact.",
-      "Move to what you’re doing about it."
-    ],
-    example: "“Before we start, I know the last reply took too long, and I’m sorry. Let’s make sure this one is clear.”",
-    insight: "Don’t overdo it. Naming a problem the customer hadn’t noticed can create one.",
-    related: ["admit", "explain-actions"] },
-
-  /* ================= 4. WORDS & TONE ================= */
-  { id: "level", cat: "words", title: "Level",
-    tagline: "Honest and forthright, strong, without blaming.",
-    desc: "Say what is true, say what you can and cannot do, and leave out accusation and spin. Firm without being harsh.",
-    question: "You must deliver a refusal, a correction or a hard truth.",
-    steps: [
-      "State the fact or decision plainly.",
-      "Give the reason in one sentence.",
-      "Remove any word that points at the customer’s fault."
-    ],
-    example: "“The deadline passed on 30 June, so I can’t process this as a standard renewal. I can explain the late-renewal route and help you through it.”",
-    insight: "Avoid “You failed to…”. Describe the situation, not the person.",
-    related: ["positive-no", "softeners", "plain"] },
-
-  { id: "softeners", cat: "words", title: "Verbal Softeners",
-    tagline: "Swap absolute language for softer words.",
-    desc: "Words like “never” and “always” sound authoritarian and antagonise even mild customers. Use unlikely, perhaps, sometimes, it’s possible, occasionally.",
-    question: "You need to disagree or correct without antagonising.",
-    steps: [
-      "Spot absolutes: never, always, impossible, definitely.",
-      "Replace them with softer, accurate words.",
-      "Pair with an offer to check."
-    ],
-    example: "Instead of “We never make that kind of mistake”: “It’s unlikely the record was changed, but let me check the audit trail with you.”",
-    insight: "Don’t soften a firm decision into something that sounds negotiable. Softeners are for claims, not rules.",
-    related: ["level", "question-state"] },
-
-  { id: "plain", cat: "words", title: "Plain Language",
-    tagline: "Short, everyday words. Explain the jargon.",
-    desc: "Customers can’t act on what they don’t understand. Use common words, short sentences, and explain acronyms.",
-    question: "Always, and especially with first-time members or when explaining policy.",
-    steps: [
-      "Replace jargon with everyday words.",
-      "Spell out acronyms the first time.",
-      "Keep sentences short."
-    ],
-    example: "Instead of “Your CPD requirement is outstanding”: “You still need 12 more hours of continuing professional development.”",
-    insight: "Plain is not casual. You can be simple and still professional.",
-    related: ["explanations", "level"] },
-
-  { id: "voice-tone", cat: "words", title: "Voice Tone (Emphatic)",
-    tagline: "Calm, steady and warm, with emphasis on the commitment.",
-    desc: "Your tone carries more than your words. Keep it even, and stress the words that carry your promise.",
-    question: "On calls and in person, especially with upset customers.",
-    steps: [
-      "Lower your pace and volume slightly.",
-      "Stress the key commitment word.",
-      "In writing, get the same effect with clear structure."
-    ],
-    example: "Stress the promise word: “I will call you back by three o’clock.”",
-    insight: "Matching an angry customer’s volume escalates things. Stay a notch calmer than them.",
-    related: ["nonverbals", "assure-effort"] },
-
-  { id: "question-state", cat: "words", title: "Question Instead of State",
-    tagline: "Turn commands into questions.",
-    desc: "People dislike being ordered around. A question softens a statement and leaves them a choice.",
-    question: "You need the customer to take an action or hear something they may not know.",
-    steps: [
-      "Notice when you’re about to say “You need to…”.",
-      "Rephrase as “Were you aware…?” or “Would you be able to…?”",
-      "Leave room for them to answer."
-    ],
-    example: "“Were you aware that our member helpdesk can check this for you?” (instead of “You need to call the helpdesk.”)",
-    insight: "Don’t turn a real requirement into an optional-sounding question. Be clear when something is mandatory.",
-    related: ["softeners", "choices"] },
-
-  /* ================= 5. COURTESY & RAPPORT ================= */
-  { id: "courtesy", cat: "courtesy", title: "Common Courtesy",
-    tagline: "Please, thank you, a greeting, an introduction.",
-    desc: "When courtesy slips, problems escalate. Stay polite, even with people you feel don’t deserve it.",
-    question: "Every contact.",
-    steps: [
-      "Greet and introduce yourself.",
-      "Use please and thank you naturally.",
-      "Stay courteous even when they aren’t."
-    ],
-    example: "“Good morning, this is Sam from Member Support. How may I help?”",
-    insight: "Courtesy is in your interest, not just theirs. It keeps difficult contacts from escalating.",
-    related: ["thanks", "use-name"] },
-
-  { id: "thanks", cat: "courtesy", title: "Thank-Yous",
-    tagline: "Be specific about what you’re thanking them for.",
-    desc: "A bare “thank you” sounds automatic. Thanking them for something specific shows you noticed.",
-    question: "They wait, supply information, raise a concern or end the contact.",
-    steps: [
-      "Name what you’re grateful for.",
-      "Say it once, sincerely.",
-      "Thank people for complaints too: they help you improve."
-    ],
-    example: "“Thank you for being so patient while I checked this.”",
-    insight: "Thanking someone for their patience when they clearly weren’t patient can sound sarcastic.",
-    related: ["courtesy", "last"] },
-
-  { id: "use-name", cat: "courtesy", title: "Use Customer’s Name",
-    tagline: "It shows they matter, and that you know who they are.",
-    desc: "Using a name signals importance. It also reduces anonymity, and anonymity tends to increase aggression.",
-    question: "Early in the interaction and at key moments.",
-    steps: [
-      "Note the name and how they prefer to be addressed.",
-      "Use it at the start and at key points.",
-      "Don’t overuse it."
-    ],
-    example: "“Mr Lim, I’ve found your application. Here’s what I can see.”",
-    insight: "Using a name in every sentence sounds scripted. Two or three times is enough.",
-    related: ["courtesy"] },
-
-  /* ================= 6. BODY LANGUAGE & SPACE ================= */
-  { id: "nonverbals", cat: "body", title: "Appropriate Nonverbals",
-    tagline: "Open posture, eye contact, attentive nods.",
-    desc: "Your body speaks before you do. Show attention and openness; avoid crossed arms, sighs, eye-rolling and checking your phone.",
-    question: "Any face-to-face contact, including video calls.",
-    steps: [
-      "Face the customer with an open posture.",
-      "Keep your hands visible and uncrossed.",
-      "Nod when they make a point."
-    ],
-    example: "Turn away from your screen when they start speaking, and look at them while they explain.",
-    insight: "Nonverbals that contradict your words win. A sigh cancels a polite sentence.",
-    related: ["smiles", "voice-tone"] },
-
-  { id: "smiles", cat: "body", title: "Appropriate Smiles",
-    tagline: "Match your expression to the moment.",
-    desc: "Smile warmly at greetings and good news. Don’t smile when someone is angry or when delivering bad news: it can read as mocking.",
-    question: "Every face-to-face contact.",
-    steps: [
-      "Smile at the greeting.",
-      "Switch to a calm, caring expression when hearing a complaint.",
-      "Smile again at a positive close."
-    ],
-    example: "A warm smile at hello; a serious, attentive face while they describe the problem.",
-    insight: "A fixed smile through a complaint looks like you’re not taking it seriously.",
-    related: ["nonverbals"] },
-
-  { id: "height", cat: "body", title: "Manage Height Differentials",
-    tagline: "Aim for roughly equal eye level.",
-    desc: "Towering over a seated customer, or being looked down on from a higher position, shifts power and raises tension.",
-    question: "Face-to-face, especially in tense moments.",
-    steps: [
-      "Notice who is standing and who is sitting.",
-      "Invite them to sit, and sit too.",
-      "If they stand and won’t sit, stand to restore balance."
-    ],
-    example: "“Please, have a seat. I’ll sit too, so we can go through this together.”",
-    insight: "Standing up suddenly can read as a threat. Move slowly and explain what you’re doing.",
-    related: ["distance", "nonverbals"] },
-
-  { id: "distance", cat: "body", title: "Manage Interpersonal Distance",
-    tagline: "Keep a respectful distance and adjust it when tension rises.",
-    desc: "About an arm’s length is a common guide. Standing slightly to the side feels less confrontational than face-on.",
-    question: "Tension is rising in person.",
-    steps: [
-      "Keep about an arm’s length.",
-      "Angle your body slightly to the side.",
-      "Make sure you both have a clear way out."
-    ],
-    example: "Step back a little, turn slightly, and keep the doorway clear.",
-    insight: "Comfortable distance varies by person and culture. Watch for someone stepping back.",
-    related: ["height", "security"] },
-
-  { id: "stop-sign", cat: "body", title: "Stop Sign (Nonverbal)",
-    tagline: "A calm raised palm that signals “let’s pause.”",
-    desc: "When someone is talking over you, a calm gesture paired with a soft phrase can create a pause. Use it lightly and with cultural sensitivity.",
-    question: "Someone is escalating and a verbal request alone isn’t working.",
-    steps: [
-      "Raise a palm at chest height, slowly.",
-      "Pair it with a quiet, respectful phrase.",
-      "Lower it once they pause."
-    ],
-    example: "Palm raised, softly: “I want to help. May I say something?”",
-    insight: "A sharp or high gesture looks aggressive. Keep it low, slow and brief.",
-    related: ["nonverbals", "set-limits"] },
-
-  /* ================= 7. INFORM & ADVISE ================= */
-  { id: "explain-actions", cat: "inform", title: "Explain Reasoning or Actions",
-    tagline: "Say what you’re doing and why.",
-    desc: "People get frustrated, even frightened, when they don’t understand what’s going on. Narrating your actions removes the mystery.",
-    question: "Before checking, pausing, transferring or refusing anything.",
-    steps: [
-      "Say what you’re about to do.",
-      "Say why.",
-      "Say how long it will take."
-    ],
-    example: "“I’m checking your CPD record because I need to confirm the dates before I can approve the extension.”",
-    insight: "Explaining is not justifying. Keep it short and factual.",
-    related: ["explanations", "phone-silence"] },
-
-  { id: "explanations", cat: "inform", title: "Provide Explanations",
-    tagline: "Teach the customer how things work.",
-    desc: "An educated customer is usually easier to serve and more loyal. Explaining the rule prevents the next problem.",
-    question: "The problem comes from a misunderstanding of a rule, form or process.",
-    steps: [
-      "Find the misunderstanding.",
-      "Explain the rule and its purpose simply.",
-      "Check they’ve understood."
-    ],
-    example: "“The system asks for both dates because the first starts the cycle and the second shows when it ends.”",
-    insight: "Explaining in a lecturing tone makes people feel stupid. Explain as you would to a respected colleague.",
-    related: ["plain", "teach-back", "effort"] },
-
-  { id: "pros-cons", cat: "inform", title: "Pros and Cons",
-    tagline: "Present options in a balanced way.",
-    desc: "A one-sided pitch makes customers suspicious of your motives. Balance makes you more credible.",
-    question: "The customer must choose between options.",
-    steps: [
-      "List the main benefit of each option.",
-      "List the main drawback of each.",
-      "Let them weigh it up."
-    ],
-    example: "“The extension gives you more time, but moves your next renewal date. The standard route is quicker, but needs the full hours by the deadline.”",
-    insight: "Hiding a drawback you know about will surface later as a complaint.",
-    related: ["alternatives", "recommend", "choices"] },
-
-  { id: "alternatives", cat: "inform", title: "Provide Alternatives",
-    tagline: "Lay out the other options that are open.",
-    desc: "Showing alternatives proves you want them to understand their options. It’s informational and doesn’t demand an answer.",
-    question: "The preferred option isn’t available.",
-    steps: [
-      "Acknowledge what can’t be done.",
-      "List the realistic alternatives.",
-      "Offer to go through them."
-    ],
-    example: "“I can’t waive the fee, but there are two other routes you could consider. Shall I go through them?”",
-    insight: "Only list options that are genuinely available to this customer.",
-    related: ["positive-no", "pros-cons", "choices"] },
-
-  { id: "recommend", cat: "inform", title: "Expert Recommendations",
-    tagline: "Offer advice, but ask first.",
-    desc: "Expert advice, or simplifying things so they reach their goal efficiently, is invaluable. Ask permission before giving it.",
-    question: "The customer is unsure which option to choose.",
-    steps: [
-      "Ask: “Would you like my recommendation?”",
-      "Give one clear recommendation.",
-      "Give the reason, tied to their situation."
-    ],
-    example: "“Would you like my recommendation? Given your dates, I’d suggest the late-renewal route.”",
-    insight: "Recommend; don’t decide for them. The choice stays theirs.",
-    related: ["pros-cons", "alternatives"] },
-
-  { id: "waiting", cat: "inform", title: "Suggest an Alternative to Waiting",
-    tagline: "Explain the delay and offer something better than waiting.",
-    desc: "Explain the reason for the wait, suggest something useful to do meanwhile, or offer to reschedule.",
-    question: "Queues, call backlogs, slow back-office checks.",
-    steps: [
-      "Say why there’s a wait and how long.",
-      "Suggest something useful to do meanwhile.",
-      "Offer a way not to wait at all."
-    ],
-    example: "“Processing takes about 15 minutes today. You’re welcome to wait, or I can email you the outcome this afternoon.”",
-    insight: "Underestimating the wait is worse than giving an honest, longer one.",
-    related: ["expectations", "choices"] },
-
-  { id: "takeaway", cat: "inform", title: "Provide a Customer Takeaway",
-    tagline: "Give them something to keep.",
-    desc: "A written summary, reference number, next steps or a link saves them from having to remember, or from calling back.",
-    question: "At the end of any contact that includes actions, deadlines or decisions.",
-    steps: [
-      "Decide what they need to remember.",
-      "Put it in writing.",
-      "Include a reference number and the next date."
-    ],
-    example: "“I’ll email you a summary today with your reference number, the three documents we need and the date to submit them.”",
-    insight: "A takeaway full of policy text gets ignored. Keep it to what they must do.",
-    related: ["summarise", "effort", "arrange-fu"] },
-
-  /* ================= 8. SOLVE & GO FURTHER ================= */
-  { id: "above-beyond", cat: "solve", title: "Above and Beyond",
-    tagline: "Do more than the minimum, where it’s fair.",
-    desc: "Customers, even difficult ones, often show great loyalty when they see extra effort, and are less likely to direct anger at you if they can’t get exactly what they want.",
-    question: "Occasionally, where it’s fair and within your authority.",
-    steps: [
-      "Look for the next problem they haven’t noticed.",
-      "Fix it, or flag it, while you’re there.",
-      "Tell them what you did."
-    ],
-    example: "“I’ve also checked your other applications, and one more needs attention. Let me sort that now.”",
-    insight: "Going beyond for one customer must not mean treating others unfairly. Stay within policy.",
-    related: ["effort", "assure-effort"] },
-
-  { id: "assure-effort", cat: "solve", title: "Assurances of Effort",
-    tagline: "Promise what you control: your effort.",
-    desc: "“I will do everything I can” is a safe commitment when the outcome depends on people or systems you don’t control.",
-    question: "The result is uncertain or someone else decides.",
-    steps: [
-      "Be honest that you can’t promise the outcome.",
-      "Promise specific actions you will take.",
-      "Follow through visibly."
-    ],
-    example: "“I can’t promise the committee’s decision, but I will make sure your case goes in with all the supporting evidence.”",
-    insight: "Vague effort promises (“I’ll look into it”) sound like a brush-off. Name the action.",
-    related: ["assure-result", "expectations"] },
-
-  { id: "assure-result", cat: "solve", title: "Assurances of Result",
-    tagline: "Promise a specific outcome, only when you can guarantee it.",
-    desc: "A firm promise reassures, but only if you have the authority and facts to deliver it.",
-    question: "You control the result.",
-    steps: [
-      "Check you can deliver.",
-      "State the outcome and time precisely.",
-      "Deliver, or warn them before the deadline if something changes."
-    ],
-    example: "“Your corrected certificate will be in your inbox by 5 pm today.”",
-    insight: "A broken guarantee damages trust more than no guarantee.",
-    related: ["assure-effort", "complete-fu"] },
-
-  { id: "choices", cat: "solve", title: "Offering Choices / Empowering",
-    tagline: "Give back a sense of control.",
-    desc: "Customers get angry when they feel helpless against policy and red tape. Real choices, even small ones, restore control.",
-    question: "You have more than one acceptable way forward.",
-    steps: [
-      "Find two or three acceptable options.",
-      "Present them simply.",
-      "Ask which they prefer."
-    ],
-    example: "“I can send the letter by email today or by post. Which would you prefer?”",
-    insight: "Too many choices overwhelm. Two or three is plenty.",
-    related: ["alternatives", "broken-record", "pros-cons"] },
-
-  { id: "expedite", cat: "solve", title: "Expedite",
-    tagline: "Speed things up when it’s justified.",
-    desc: "Prioritise or fast-track a case, but only when it’s fair to others, and explain what you’re doing.",
-    question: "An imminent deadline, or a long delay already suffered (especially our fault).",
-    steps: [
-      "Check that speeding up is justified and allowed.",
-      "Take the action: flag as urgent, skip a non-essential step.",
-      "Tell them what changes and when they’ll hear."
-    ],
-    example: "“Because your deadline is tomorrow, I’ve marked your case as urgent. You’ll hear from us by noon.”",
-    insight: "Expediting for whoever shouts loudest rewards the wrong behaviour and is unfair to others.",
-    related: ["admit", "assure-result"] },
-
-  { id: "bonus", cat: "solve", title: "Bonus Buy-Off",
-    tagline: "A small goodwill gesture to repair the relationship.",
-    desc: "After a clear failure, a small extra, such as a priority slot or a direct contact, signals you value the relationship. Use sparingly, within policy.",
-    question: "We caused a clear inconvenience and the fix alone doesn’t feel enough.",
-    steps: [
-      "Check what you’re allowed to offer.",
-      "Make it relevant to their inconvenience.",
-      "Offer it after the fix, not instead of it."
-    ],
-    example: "“To make up for the delay, I’ll give you my direct contact for this case so you don’t have to start over.”",
-    insight: "A gesture offered before the problem is fixed can look like a bribe.",
-    related: ["recovery-paradox", "above-beyond"] },
-
-  /* ================= 9. LIMIT, SEPARATE & ESCALATE ================= */
-  { id: "set-limits", cat: "limit", title: "Set Limits",
-    tagline: "“If you… then I… It’s up to you.”",
-    desc: "Name the behaviour, the consequence and the choice, calmly and without making it personal. Use only after other techniques fail, and know your policy on ending a contact.",
-    question: "The customer is abusive, swearing or threatening.",
-    steps: [
-      "<b>If:</b> name the specific behaviour.",
-      "<b>Then:</b> name the consequence.",
-      "<b>Choice:</b> “It’s up to you whether we continue.” Then follow through."
-    ],
-    example: "“If you continue to shout, then I’ll have to end this call. It’s up to you whether we continue.”",
-    insight: "A limit you don’t enforce teaches the customer that limits are empty.",
-    related: ["no-bait", "disengage", "security"] },
-
-  { id: "disengage", cat: "limit", title: "Disengage",
-    tagline: "Take a break for a fresh start.",
-    desc: "Step away so both sides can calm down or think clearly. When the conversation resumes, it feels like a fresh start.",
-    question: "The conversation is going in circles or emotions are too high.",
-    steps: [
-      "Give a neutral reason for the break.",
-      "Say when you’ll be back.",
-      "Come back on time and restart calmly."
-    ],
-    example: "“Let me step away for a moment and check with a colleague. I’ll be back shortly.”",
-    insight: "Disengaging without saying when you’ll return feels like abandonment.",
-    related: ["timing", "set-limits"] },
-
-  { id: "timing", cat: "limit", title: "Use of Timing with Angry Customers",
-    tagline: "A short timeout gives them time to think.",
-    desc: "Most angry customers come back calmer after a short break, and some apologise. A timeout is not a punishment.",
-    question: "After a heated exchange, together with [[disengage|Disengage]].",
-    steps: [
-      "Offer a short break with a reason.",
-      "Keep it to a few minutes.",
-      "Return and restart without referring back to the outburst."
-    ],
-    example: "“I’ll take five minutes to find the details. Would you like to wait here or shall I call you back?”",
-    insight: "Breaks longer than a few minutes give them a new reason to be angry.",
-    related: ["disengage", "venting"] },
-
-  { id: "audience", cat: "limit", title: "Audience Removal",
-    tagline: "Move the conversation away from onlookers.",
-    desc: "An audience makes people perform and makes backing down harder. Serve them somewhere private.",
-    question: "Other customers or colleagues are watching.",
-    steps: [
-      "Offer a private space as a courtesy.",
-      "Make sure a colleague knows where you are.",
-      "Continue the conversation there."
-    ],
-    example: "“Could we speak in the meeting room? It will be quieter and more private.”",
-    insight: "Don’t isolate yourself with someone who seems dangerous. Safety comes first.",
-    related: ["isolate", "security", "privacy"] },
-
-  { id: "isolate", cat: "limit", title: "Isolate / Detach Customer",
-    tagline: "Separate them from what feeds the escalation.",
-    desc: "A companion egging them on, a public comment thread or a crowded counter can fuel things. Deal with the customer one to one.",
-    question: "A third party or public setting is making things worse.",
-    steps: [
-      "Identify what is feeding the escalation.",
-      "Offer a one-to-one channel.",
-      "Continue privately."
-    ],
-    example: "(Online) “Thanks for flagging this. I’ll message you privately so we can sort out your details safely.”",
-    insight: "Moving a public complaint private must not look like hiding it. Reply publicly that you’re helping.",
-    related: ["audience", "privacy"] },
-
-  { id: "supervisor", cat: "limit", title: "Refer to Supervisor",
-    tagline: "Hand over to someone with more authority, with a briefing.",
-    desc: "Some customers calm down when they speak to someone senior. Brief the supervisor first, with the name, the issue and their state of mind, so the customer doesn’t repeat everything.",
-    question: "The customer asks for a manager, or the issue is beyond your authority.",
-    steps: [
-      "Brief the supervisor: name, issue, state of mind.",
-      "Tell the customer who is taking over and that they’re briefed.",
-      "Hand over warmly, not as a punishment."
-    ],
-    example: "“I’d like to bring in my supervisor, Ms Chen. She already has your details, so you won’t need to explain it all again.”",
-    insight: "An unbriefed handover makes the customer start again, which raises their anger.",
-    related: ["third-party", "fcr", "own-it"] },
-
-  { id: "third-party", cat: "limit", title: "Refer to Third Party",
-    tagline: "Bring in someone who knows more, or who fits better.",
-    desc: "Someone else may know the subject better, or have a style that works better with this customer.",
-    question: "You lack the expertise, or the relationship is stuck.",
-    steps: [
-      "Identify the right person.",
-      "Brief them.",
-      "Introduce them and explain why."
-    ],
-    example: "“Our CPD adviser handles this type of case daily. Let me introduce you.”",
-    insight: "A referral without a warm introduction feels like being passed around.",
-    related: ["supervisor", "fcr"] },
-
-  { id: "security", cat: "limit", title: "Contact Security / Authorities",
-    tagline: "Safety first: yours, your colleagues’ and other customers’.",
-    desc: "When there are threats or a risk of harm, escalate to security, the authorities or senior management. Follow your emergency procedure.",
-    question: "Threats, violence or any risk that someone could be hurt.",
-    steps: [
-      "Stay calm and keep a safe distance.",
-      "Alert a colleague, security or the authorities.",
-      "Afterwards, record what happened and report it."
-    ],
-    example: "(Calmly, to a colleague) “Please call security. I’ll stay with the customer until they arrive.”",
-    insight: "Don’t wait until it’s too late. If you feel unsafe, act.",
-    related: ["set-limits", "distance", "self-care"] },
-
-  { id: "privacy", cat: "limit", title: "Privacy and Confidentiality",
-    tagline: "Protect personal and case information.",
-    desc: "Verify identity before sharing anything. Never discuss another person’s details, or a customer’s case where others can overhear.",
-    question: "Always, especially when a third party contacts you on someone’s behalf.",
-    steps: [
-      "Verify identity before sharing details.",
-      "Share only what’s needed.",
-      "Move sensitive discussions somewhere private."
-    ],
-    example: "“To protect your privacy, I need to confirm a few details before I can discuss your record.”",
-    insight: "Explain why you’re checking, or verification feels like suspicion.",
-    related: ["audience", "isolate"] },
-
-  /* ================= 10. FOLLOW UP & CLOSE ================= */
-  { id: "arrange-fu", cat: "close", title: "Arrange Follow-Up",
-    tagline: "What you’ll do, by when, and how they’ll hear.",
-    desc: "A good follow-up plan has three parts: what you’ll do in the meantime, a specific time, and a choice of how and when they hear back.",
-    question: "You can’t resolve the matter immediately.",
-    steps: [
-      "Say what you’ll do between now and the follow-up.",
-      "Give a specific time.",
-      "Offer a choice of channel: call, email, or they contact you."
-    ],
-    example: "“I’ll check with the committee today and update you by 3 pm tomorrow. Would you prefer a call or an email?”",
-    insight: "“I’ll get back to you soon” is not a follow-up plan.",
-    related: ["complete-fu", "expectations"] },
-
-  { id: "complete-fu", cat: "close", title: "Complete Follow-Up",
-    tagline: "Do what you said, when you said.",
-    desc: "If something changes, tell the customer before the deadline, not after.",
-    question: "Every time a follow-up was promised.",
-    steps: [
-      "Diarise every promised follow-up.",
-      "Deliver on time.",
-      "If you can’t, update them before the deadline with a new date."
-    ],
-    example: "“I said I’d update you by 3 pm. The committee hasn’t met yet. I’ll update you again on Thursday morning.”",
-    insight: "A missed follow-up erases the goodwill you earned in the original conversation.",
-    related: ["arrange-fu", "finish-fu"] },
-
-  { id: "finish-fu", cat: "close", title: "Finish Off / Follow Up",
-    tagline: "Check back that the fix worked.",
-    desc: "Once it’s resolved, confirm the customer is satisfied. It closes the loop and catches problems early.",
-    question: "After a complaint, an error, or any case that took effort.",
-    steps: [
-      "Wait a sensible time after the fix.",
-      "Contact them to check it worked.",
-      "Fix anything left over."
-    ],
-    example: "“I’m following up to confirm you received the corrected letter and that everything now looks right on your side.”",
-    insight: "Follow-up is where many organisations fall short in service recovery.",
-    related: ["recovery-paradox", "complete-fu"] },
-
-  { id: "close-positive", cat: "close", title: "Close Interactions Positively",
-    tagline: "End every contact on a positive note.",
-    desc: "Even difficult conversations should end well. Sarcasm is never acceptable: it reignites the anger.",
-    question: "Every interaction.",
-    steps: [
-      "Summarise the next step.",
-      "Thank them specifically.",
-      "Leave the door open."
-    ],
-    example: "“Thank you for your patience today. You have the next steps now, and I’m here if anything is unclear.”",
-    insight: "People remember endings most. See [[peak-end|The ending matters]].",
-    related: ["peak-end", "thanks", "summarise"] },
-
-  /* ================= FRAMEWORKS & PRINCIPLES ================= */
-  { id: "heard", cat: "frame", title: "HEARD",
-    tagline: "Hear, Empathize, Apologize, Resolve, Diagnose.",
-    desc: "A service recovery sequence popularly attributed to Disney. Emotion first, then solution, then prevention.",
-    question: "We got something wrong, the customer is upset, and you want to stop it happening again.",
-    steps: [
-      "<b>Hear:</b> let them tell the whole story without interrupting.",
-      "<b>Empathize:</b> show you understand how they feel.",
-      "<b>Apologize:</b> for the impact, even if you’re not the cause.",
-      "<b>Resolve:</b> agree a fix with a clear timeline.",
-      "<b>Diagnose:</b> afterwards, find the root cause and fix the process."
-    ],
-    example: "“I’d be frustrated too. I’m sorry this happened. I’ll correct it today and confirm by email.”",
-    insight: "Some versions use different words for the letters. The idea is the same.",
-    related: ["last", "complaints-info", "apologise"] },
-
-  { id: "last", cat: "frame", title: "LAST",
-    tagline: "Listen, Apologise, Solve, Thank.",
-    desc: "A four-step script short enough to remember in the middle of a tense conversation.",
-    question: "You need a quick, lightweight recovery script.",
-    steps: [
-      "<b>Listen:</b> “Can you tell me what happened?”",
-      "<b>Apologise:</b> “I’m sorry about that.”",
-      "<b>Solve:</b> “Let me see what I can do to correct this now.”",
-      "<b>Thank:</b> “Thank you for telling us. It helps us improve.”"
-    ],
-    insight: "Don’t solve before you listen, or the fix may not match the failure. Use [[heard|HEARD]] when you also need to prevent a repeat.",
-    related: ["heard", "thanks"] },
-
-  { id: "recovery-paradox", cat: "frame", title: "Service Recovery Paradox",
-    tagline: "A problem fixed brilliantly can build more loyalty than no problem.",
-    desc: "Coined in 1992 by McCollough and Bharadwaj. Real but not universal: it works less well for repeat failures, big failures and faults the customer sees as avoidable.",
-    question: "Thinking about how to respond after a failure.",
-    steps: [
-      "Fix it quickly and generously.",
-      "Explain what you’ve changed.",
-      "Follow up afterwards."
-    ],
-    example: "After an error: apologise, fix it fast, explain the change, and check back a few days later.",
-    insight: "Recovery is not a substitute for getting it right. A slow or grudging fix lets them down twice.",
-    related: ["finish-fu", "heard", "admit"] },
-
-  { id: "effort", cat: "frame", title: "Make It Easy",
-    tagline: "Reducing customer effort builds loyalty more than delight.",
-    desc: "A 2010 HBR study (Dixon, Freeman and Toman, 75,000+ customers) found that reducing the work customers must do to solve their problem drives loyalty; delighting them mostly doesn’t.",
-    question: "Designing any reply, form or process.",
-    steps: [
-      "Resolve the current issue and head off the next one.",
-      "Don’t make them switch channels or repeat information.",
-      "Tell them exactly what to do next."
-    ],
-    example: "Answer the follow-up question they haven’t asked yet, and attach the form they’ll need.",
-    insight: "Extra flourishes don’t make up for a reply that leaves the member with more work.",
-    related: ["fcr", "takeaway", "above-beyond"] },
-
-  { id: "own-it", cat: "frame", title: "Own It",
-    tagline: "The customer should always know who has their case.",
-    desc: "One clear owner prevents dropped cases. If you hand over, say who has it, what they know, and when they’ll hear next.",
-    question: "Any case that needs more than one contact.",
-    steps: [
-      "Take ownership out loud.",
-      "Give your name and how to reach you.",
-      "If you hand over, introduce the new owner."
-    ],
-    example: "“I’m taking ownership of this. I’ll be your contact until it’s resolved.”",
-    insight: "“Someone will get back to you” means no one owns it.",
-    related: ["supervisor", "fcr"] },
-
-  { id: "fcr", cat: "frame", title: "No Re-Explaining",
-    tagline: "Aim to resolve first time; never make them start over.",
-    desc: "Resolve at first contact where you can. When you can’t, record the case so nobody has to ask the customer to repeat themselves.",
-    question: "Every contact, and especially transfers.",
-    steps: [
-      "Try to resolve it now.",
-      "If not, record everything needed to continue.",
-      "Brief whoever takes over."
-    ],
-    example: "“I’ve noted everything in your file, so my colleague will already have the details.”",
-    insight: "Having to repeat a story is one of the biggest drivers of customer effort.",
-    related: ["effort", "supervisor", "own-it"] },
-
-  { id: "positive-no", cat: "frame", title: "Say What You Can Do",
-    tagline: "The positive no: lead with what’s possible.",
-    desc: "When you must refuse, give the reason and lead with what you can do. People remember the alternative more kindly than a bare refusal.",
-    question: "Declining any request.",
-    steps: [
-      "Say clearly what can’t be done.",
-      "Give the reason.",
-      "Move straight to what can be done."
-    ],
-    example: "Instead of “We can’t extend the deadline”: “The deadline can’t be extended, but I can help you submit today and explain the late-renewal route.”",
-    insight: "Don’t bury the no. A vague answer leads to a second, angrier contact.",
-    related: ["level", "alternatives"] },
-
-  { id: "expectations", cat: "frame", title: "Manage Expectations",
-    tagline: "Under-promise, then deliver.",
-    desc: "Give realistic timelines. A missed promise hurts more than a longer, honest estimate.",
-    question: "Giving any timeline or outcome.",
-    steps: [
-      "Check how long it really takes.",
-      "Give a realistic estimate with a little buffer.",
-      "Update them if anything changes."
-    ],
-    example: "“Allow five working days. I’ll tell you sooner if it’s ready earlier.”",
-    insight: "Padding too much makes you look slow. Aim for honest, not inflated.",
-    related: ["assure-result", "arrange-fu", "waiting"] },
-
-  { id: "empathy-not-agree", cat: "frame", title: "Empathy Is Not Agreement",
-    tagline: "Recognise the feeling; keep the decision.",
-    desc: "You can understand how someone feels without accepting their facts or giving them what they ask for.",
-    question: "Showing empathy while holding a firm position.",
-    steps: [
-      "Acknowledge the feeling.",
-      "State the decision separately.",
-      "Explain how it was made."
-    ],
-    example: "“I understand why this feels unfair, and I’m going to explain how the decision was made.”",
-    insight: "Mixing them up leads to over-promising: “I understand, I’ll get that sorted” when you can’t.",
-    related: ["empathy", "level", "fairness"] },
-
-  { id: "fairness", cat: "frame", title: "Fair Process",
-    tagline: "Be heard, give reasons, be consistent.",
-    desc: "In registry and policy work, customers judge the process as much as the outcome.",
-    question: "Making or explaining a decision, appeal or waiver.",
-    steps: [
-      "Let the customer be heard.",
-      "Give clear reasons tied to the criteria.",
-      "Treat similar cases alike, and explain how to request a review."
-    ],
-    example: "“This decision follows the published criteria. If you have new evidence, here’s how to request a review.”",
-    insight: "Exceptions made for one person quickly become a fairness problem for everyone else.",
-    related: ["empathy-not-agree", "explanations", "level"] },
-
-  { id: "teach-back", cat: "frame", title: "Teach-Back",
-    tagline: "Ask them to say the next step in their own words.",
-    desc: "Checking understanding catches gaps before they become a second contact, without sounding like a test.",
-    question: "The end of any contact with steps to follow.",
-    steps: [
-      "Frame it as checking your explanation, not their memory.",
-      "Ask what they’ll do first.",
-      "Clarify anything they miss."
-    ],
-    example: "“To make sure I explained it clearly, could you tell me what you’ll do first?”",
-    insight: "Asked condescendingly, it feels like a quiz. Own the explanation.",
-    related: ["summarise", "explanations"] },
-
-  { id: "complaints-info", cat: "frame", title: "Complaints Are Information",
-    tagline: "Each complaint points to a possible process problem.",
-    desc: "Log the cause, look for patterns, fix the root. It’s the Diagnose step of HEARD at team level.",
-    question: "After any complaint is resolved.",
-    steps: [
-      "Record the cause, not just the fix.",
-      "Look for repeats.",
-      "Change the form, template or process."
-    ],
-    example: "Three members misread the same form field, so change the wording on the form.",
-    insight: "Fixing each complaint individually while the cause stays hides the real problem.",
-    related: ["heard", "effort"] },
-
-  { id: "peak-end", cat: "frame", title: "The Ending Matters",
-    tagline: "People judge an experience by its peak and its end.",
-    desc: "The peak-end effect: the most intense moment and the final minute shape how the whole contact is remembered.",
-    question: "Closing any interaction, especially a hard one.",
-    steps: [
-      "Give a clear summary.",
-      "Close warmly.",
-      "Confirm the next step."
-    ],
-    example: "End a tough call with: “Thank you for working through this with me. You’ll have the confirmation by Friday.”",
-    insight: "A rushed, cold close can undo an otherwise good conversation.",
-    related: ["close-positive", "summarise"] },
-
-  { id: "self-care", cat: "frame", title: "Look After Yourself",
-    tagline: "Difficult contacts are draining.",
-    desc: "Staying calm is easier when you’re not carrying the last bad call. Recovery is part of the job.",
-    question: "After a difficult or abusive contact.",
-    steps: [
-      "Take a short break afterwards.",
-      "Debrief with a colleague or supervisor.",
-      "Report abuse; don’t absorb it."
-    ],
-    example: "“That call was rough. I’m taking five minutes before the next one.”",
-    insight: "Remember: the customer’s anger is usually about the situation, not about you.",
-    related: ["no-bait", "security"] }
+      "Assume a mistake before you assume malice.",
+      "Look for the situation behind the behaviour, not just the trait.",
+      "Ask what the person is rewarded or pressured to do."
+    ],
+    result: "Less drama, better predictions and more useful conversations." },
+
+  { id: "r-edge", cat: "recipe", title: "Build Your Edge",
+    tagline: "Design a career or business advantage others can’t easily copy.",
+    desc: "Advantage comes from playing where you know the most, combining rare skills and finding a place that rewards them.",
+    combine: ["circle", "alloying", "niches"],
+    stepText: [
+      "Map honestly what you know deeply and where your knowledge ends.",
+      "Combine two or three skills that are rarely found together.",
+      "Find the niche where that combination is most valued, and keep adapting it."
+    ],
+    result: "A position where you compete on strengths rather than effort." },
+
+  /* ================= GENERAL THINKING ================= */
+  { id: "map-territory", cat: "general", title: "The Map Is Not the Territory",
+    tagline: "Our models of the world are not the world itself.",
+    desc: "Every map, report or résumé is a simplification. Useful, but it leaves things out and goes out of date. Trouble starts when we treat the representation as reality.",
+    question: "What does this map leave out, and when was it last checked against reality?",
+    steps: [
+      "Identify the ‘maps’ you rely on: dashboards, plans, reports, reputations.",
+      "Check them against first-hand reality regularly.",
+      "When you rely on others’ maps, choose mapmakers who are rigorous, transparent and willing to revise."
+    ],
+    insight: "Updating a map is uncomfortable because it means accepting what is true over what we want to be true.",
+    related: ["seeing-front", "first-principles"] },
+
+  { id: "circle", cat: "general", title: "Circle of Competence",
+    tagline: "Know exactly where your expertise ends.",
+    desc: "You win more often where you have an advantage. The size of your circle matters less than knowing its boundary and being honest about it.",
+    question: "Is this inside or outside what I truly understand?",
+    steps: [
+      "List the areas where your judgment has a strong track record.",
+      "When a decision falls outside, slow down or borrow someone else’s circle.",
+      "Expand the circle deliberately through learning, not by pretending."
+    ],
+    insight: "Outside your circle you’re sailing without charts. Confidence there is a warning sign, not a strength.",
+    related: ["map-territory", "specialization"] },
+
+  { id: "first-principles", cat: "general", title: "First Principles Thinking",
+    tagline: "Break a problem down to its fundamental truths and rebuild.",
+    desc: "Instead of copying how things have always been done, strip a problem to what is undeniably true and reason up from there. Rarely done, so it’s a real advantage.",
+    question: "What do we know for certain here, and what is just convention?",
+    steps: [
+      "State the problem and list every assumption behind the current approach.",
+      "Challenge each one: is it a law of nature or a habit?",
+      "Rebuild a solution from the facts that survive."
+    ],
+    insight: "It is slow and effortful. Save it for problems where incremental improvement has stopped working.",
+    related: ["thought-experiment", "inversion"] },
+
+  { id: "thought-experiment", cat: "general", title: "Thought Experiment",
+    tagline: "Test ideas in a sandbox of the mind.",
+    desc: "By imagining a simplified scenario you can explore consequences, expose hidden assumptions and see unintended effects without real-world cost.",
+    question: "What if…?",
+    steps: [
+      "Pose a clear ‘what if’ question.",
+      "Strip away noise and keep only the variables that matter.",
+      "Run the scenario to its logical end and note what surprises you."
+    ],
+    insight: "A thought experiment is only as good as its assumptions. Test the conclusion in reality before betting on it.",
+    related: ["first-principles", "second-order"] },
+
+  { id: "second-order", cat: "general", title: "Second-Order Thinking",
+    tagline: "Ask ‘and then what?’",
+    desc: "First-order thinking stops at the immediate result. Second-order thinking follows the ripple effects over time, like a chess player thinking several moves ahead.",
+    question: "And then what? And after that?",
+    steps: [
+      "Write down the immediate effect of the decision.",
+      "Ask what that effect will cause in a month, a year, five years.",
+      "Consider how others will react and what that changes."
+    ],
+    insight: "Many choices that feel good now are bad later, and many that feel bad now pay off. Judge on the whole journey.",
+    related: ["inversion", "incentives"] },
+
+  { id: "probabilistic", cat: "general", title: "Probabilistic Thinking",
+    tagline: "Think in odds, not certainties.",
+    desc: "Estimate how likely outcomes are, check your assumptions and keep updating as new information arrives. It is uncomfortable, but it beats false certainty.",
+    question: "How likely is this, really, and what would change my estimate?",
+    steps: [
+      "Put a rough probability on the outcomes you care about.",
+      "Start from the base rate, then adjust for specifics.",
+      "Update when new evidence arrives, and say so."
+    ],
+    insight: "Saying “I think there’s a 60% chance” is more honest, and more useful, than pretending to know.",
+    related: ["representativeness", "sampling"] },
+
+  { id: "inversion", cat: "general", title: "Inversion",
+    tagline: "Avoid the paths to failure.",
+    desc: "Instead of asking how to succeed, ask what would guarantee failure, then avoid it. Much success comes simply from not making obvious mistakes.",
+    question: "What would guarantee this fails?",
+    steps: [
+      "Write the goal, then flip it: how would we make sure it fails?",
+      "List the failure causes honestly.",
+      "Remove or guard against each one."
+    ],
+    insight: "Inversion breaks tunnel vision. When you’re stuck solving forward, try solving backward.",
+    related: ["second-order", "margin-safety"] },
+
+  { id: "occam", cat: "general", title: "Occam’s Razor",
+    tagline: "Prefer the explanation with the fewest assumptions.",
+    desc: "When explanations compete, the simplest one is usually the best bet. It isn’t always true, but it should be preferred until evidence says otherwise.",
+    question: "Which explanation needs the fewest things to be true?",
+    steps: [
+      "List the competing explanations.",
+      "Count the assumptions each one needs.",
+      "Start with the simplest and only add complexity when facts demand it."
+    ],
+    insight: "Too simple fails to capture reality; too complex collapses under its own weight.",
+    related: ["hanlon", "first-principles"] },
+
+  { id: "hanlon", cat: "general", title: "Hanlon’s Razor",
+    tagline: "Don’t assume malice when a mistake explains it.",
+    desc: "People forget, act on incomplete information and chase short-term wins. That looks like an attack from outside, but it rarely is.",
+    question: "Is there an innocent explanation for this?",
+    steps: [
+      "Before reacting, list the non-malicious explanations.",
+      "Respond to the most likely one with curiosity, not accusation.",
+      "Escalate only if evidence of bad intent piles up."
+    ],
+    insight: "Malice does exist. The razor is a default, not a blindfold.",
+    related: ["fae", "occam"] },
+
+  /* ================= PHYSICS, CHEMISTRY & BIOLOGY ================= */
+  { id: "relativity", cat: "science", title: "Relativity",
+    tagline: "Every view depends on where you stand.",
+    desc: "Our perceptions are shaped by our frame of reference. Two people can see the same event very differently. That isn’t relativism: some views are still better supported than others.",
+    question: "What would this look like from their position?",
+    steps: [
+      "Name your own frame: role, background, incentives.",
+      "Ask others what they see that you can’t.",
+      "Judge their input on evidence and update your view."
+    ],
+    insight: "Everyone has blind spots. The only cure is borrowing other people’s eyes.",
+    related: ["map-territory", "liking"] },
+
+  { id: "reciprocity", cat: "science", title: "Reciprocity",
+    tagline: "What you give tends to come back.",
+    desc: "People mirror the treatment they receive. Give cynicism and you get it back; give trust and generosity and you usually receive the same.",
+    question: "Am I waiting for others to go first?",
+    steps: [
+      "Decide what you want more of from others.",
+      "Give it first, without keeping score.",
+      "Be patient. Reciprocity works over repeated interactions."
+    ],
+    insight: "The common mistake is waiting for the other side to move. Going first is how you unlock it.",
+    related: ["cooperation", "trust"] },
+
+  { id: "thermodynamics", cat: "science", title: "Thermodynamics",
+    tagline: "Energy is conserved, but disorder always grows.",
+    desc: "Energy can’t be created or destroyed, only transformed. Left alone, any system drifts toward disorder (entropy). Order needs constant energy to maintain.",
+    question: "What will decay here if nobody puts energy into it?",
+    steps: [
+      "Identify what in your life or work needs maintenance to stay in order.",
+      "Budget regular energy for it instead of waiting for collapse.",
+      "Choose people and environments that add energy rather than drain it."
+    ],
+    insight: "Entropy is the tax on time. A clean room, a healthy team or a good process never stays that way by itself.",
+    related: ["equilibrium", "churn"] },
+
+  { id: "inertia", cat: "science", title: "Inertia",
+    tagline: "Things keep doing what they’re already doing.",
+    desc: "Objects at rest stay at rest; objects in motion stay in motion. Habits, beliefs and organisations work the same way: the bigger and older they are, the more force change takes.",
+    question: "How can I make the first move small enough to start today?",
+    steps: [
+      "Reduce the size of the first step (one push-up, one paragraph).",
+      "Keep going daily to build momentum.",
+      "Once moving, protect the momentum. Stopping costs more than continuing."
+    ],
+    insight: "Success creates its own inertia. Big organisations resist change; small ones can use their lightness as an edge.",
+    related: ["activation-energy", "velocity"] },
+
+  { id: "friction", cat: "science", title: "Friction and Viscosity",
+    tagline: "Remove resistance before adding force.",
+    desc: "Friction and viscosity slow everything down. We usually respond by pushing harder, when removing the resistance is often easier and more effective.",
+    question: "What is slowing this down that I could simply remove?",
+    steps: [
+      "List the sources of drag in a process: approvals, handoffs, unclear steps.",
+      "Remove or reduce the biggest one before adding effort.",
+      "Remember some friction is useful: it gives traction and prevents slips."
+    ],
+    insight: "Friction can be used strategically: adding it to a rival’s path can matter more than speeding up your own.",
+    related: ["velocity", "bottlenecks"] },
+
+  { id: "velocity", cat: "science", title: "Velocity",
+    tagline: "Speed with direction.",
+    desc: "Velocity is speed in a direction. Moving fast in circles goes nowhere, while steady progress in the right direction crosses continents.",
+    question: "Am I moving fast, or am I moving forward?",
+    steps: [
+      "Set a clear destination before increasing pace.",
+      "Increase velocity by adding effort and removing what doesn’t contribute.",
+      "Adjust direction as new information arrives."
+    ],
+    insight: "Busyness is speed without direction.",
+    related: ["friction", "inertia"] },
+
+  { id: "leverage", cat: "science", title: "Leverage",
+    tagline: "Small force, big result, when applied at the right point.",
+    desc: "Leverage multiplies effort: capital, code, media, people and technology all let a little input create outsized output. It amplifies downsides just as much.",
+    question: "Where would a small effort create the biggest result?",
+    steps: [
+      "Identify your sources of leverage: skills, tools, relationships, capital.",
+      "Focus on the critical few habits or people with the biggest effect.",
+      "Before applying leverage, check the downside if things go wrong."
+    ],
+    insight: "Leverage used without restraint (too much debt, exploiting people) creates blow-ups and lost loyalty.",
+    related: ["debt", "second-order"] },
+
+  { id: "activation-energy", cat: "science", title: "Activation Energy",
+    tagline: "The upfront push needed to get things started.",
+    desc: "Reactions need a minimum burst of energy to begin. Change works the same way: it costs most at the start, then becomes self-sustaining.",
+    question: "What is the minimum push that would get this started?",
+    steps: [
+      "Identify the starting cost: setup, first conversation, first draft.",
+      "Plan to pay it once, deliberately, rather than waiting to feel ready.",
+      "Lower the cost where you can (see [[catalysts|Catalysts]])."
+    ],
+    insight: "Treat the start-up cost as a one-time fee, not a permanent obstacle.",
+    related: ["catalysts", "inertia"] },
+
+  { id: "catalysts", cat: "science", title: "Catalysts",
+    tagline: "Something that speeds up change without being used up.",
+    desc: "A catalyst lowers the energy needed for a reaction, making change faster or possible at all. A mentor, a book or a new tool can play that role, and so can you.",
+    question: "What or who could make this change easier?",
+    steps: [
+      "Identify a catalyst for a change you want: a person, tool or event.",
+      "Bring it into the situation early.",
+      "Look for chances to be a catalyst for someone else."
+    ],
+    related: ["activation-energy", "alloying"] },
+
+  { id: "alloying", cat: "science", title: "Alloying",
+    tagline: "The right mix can be far greater than the parts.",
+    desc: "Combining elements in the right proportions creates properties none has alone. In people, a rare combination of skills is worth far more than any single one.",
+    question: "What combination would make this uniquely strong?",
+    steps: [
+      "List your strongest skills and spot rare pairings (engineering + clear writing).",
+      "Add one complementary skill rather than deepening one you already have.",
+      "In teams, mix perspectives deliberately, in sensible proportions."
+    ],
+    insight: "Proportion matters. Too much of one ingredient and the result becomes brittle.",
+    related: ["niches", "scarcity"] },
+
+  { id: "natural-selection", cat: "science", title: "Natural Selection & Extinction",
+    tagline: "Adapt or be replaced.",
+    desc: "Traits that help survival spread; those that don’t disappear. Companies, ideas and careers face the same winnowing when the environment changes.",
+    question: "If the environment changed tomorrow, would I still fit?",
+    steps: [
+      "Watch for changes in your environment: technology, customers, rules.",
+      "Keep updating skills and methods before you’re forced to.",
+      "Let go of approaches that no longer fit."
+    ],
+    insight: "There are no permanent victories, only continued adaptation.",
+    related: ["red-queen", "creative-destruction"] },
+
+  { id: "red-queen", cat: "science", title: "The Red Queen Effect",
+    tagline: "You have to keep running just to stay in place.",
+    desc: "In any competitive arena, every advance triggers a counter-advance. Standing still means falling behind, and past advantages make us slow to change.",
+    question: "What am I holding onto because it worked before?",
+    steps: [
+      "Assume competitors are adapting right now.",
+      "Build continuous improvement into routine, not one-off projects.",
+      "Regularly retire what used to work."
+    ],
+    insight: "Complacency is the most dangerous side-effect of success.",
+    related: ["natural-selection", "creative-destruction"] },
+
+  { id: "ecosystems", cat: "science", title: "Ecosystems",
+    tagline: "Everything is connected.",
+    desc: "In an ecosystem each part affects many others. Businesses and economies are the same: an intervention in one place ripples in surprising ways.",
+    question: "What else will this touch?",
+    steps: [
+      "Map the players around a decision: customers, partners, competitors, regulators.",
+      "Trace how a change for one affects the others.",
+      "Be slow to intervene in systems that are working. First, do no harm."
+    ],
+    insight: "Well-meant fixes often create bigger problems elsewhere.",
+    related: ["interdependence", "second-order"] },
+
+  { id: "niches", cat: "science", title: "Niches",
+    tagline: "Be the best fit for a specific place.",
+    desc: "A niche is a role where a particular species, business or person thrives with less competition. Specialists win in stable times; generalists survive change.",
+    question: "Where do my strengths face the least competition?",
+    steps: [
+      "Define the specific need you serve best.",
+      "Build depth there instead of trying to serve everyone.",
+      "Watch for shifts that could shrink the niche, and evolve it in time."
+    ],
+    insight: "A cosy niche can become a trap. Specialisation buys strength at the cost of fragility.",
+    related: ["specialization", "alloying"] },
+
+  { id: "self-preservation", cat: "science", title: "Self-Preservation",
+    tagline: "The instinct to protect ourselves, including our identity.",
+    desc: "Living things protect themselves. For humans that includes status and self-image, so anything threatening how we see ourselves triggers defence.",
+    question: "Am I protecting something essential, or just my ego?",
+    steps: [
+      "Notice when you react defensively to ideas.",
+      "Separate genuine threats from threats to your self-image.",
+      "Take measured risks: avoiding all risk is itself a risk."
+    ],
+    insight: "Too much focus on avoiding threats means missing opportunities in plain sight.",
+    related: ["denial", "scarcity"] },
+
+  { id: "replication", cat: "science", title: "Replication",
+    tagline: "Copy what works, then improve it.",
+    desc: "Life spreads by copying, and copying errors drive evolution. Imitating what works gives you a baseline fast; innovation then sets a new one.",
+    question: "Who has already solved this, and what can I copy?",
+    steps: [
+      "Find proven approaches and copy them to reach a baseline.",
+      "Learn the environment, then adapt and innovate.",
+      "Keep reviewing: what replicated well yesterday may not suit tomorrow."
+    ],
+    insight: "Unchecked replication, of bad ideas or rapid growth, can be cancerous. Copy what is sound.",
+    related: ["algorithms", "natural-selection"] },
+
+  { id: "cooperation", cat: "science", title: "Cooperation",
+    tagline: "The secret of human success.",
+    desc: "Working together creates options no one has alone. Cooperation needs conditions to last: repeated interactions, shared benefits and protection against cheating.",
+    question: "What would make cooperation the rational choice here?",
+    steps: [
+      "Create repeated interactions rather than one-offs.",
+      "Make benefits clearly shared.",
+      "Set norms that reward cooperation and penalise free-riding."
+    ],
+    related: ["reciprocity", "trust"] },
+
+  { id: "hierarchy", cat: "science", title: "Hierarchical Organization",
+    tagline: "Structure that lets complexity scale.",
+    desc: "Hierarchies allow specialisation and coordination. Too much creates unrest and politics; too little creates chaos.",
+    question: "Is our structure serving the mission or the status game?",
+    steps: [
+      "Check whether layers add coordination or just approvals.",
+      "Watch for status contests that pull effort away from the goal.",
+      "Adjust: hierarchy should be fluid as needs change."
+    ],
+    insight: "When climbing the ladder matters more than winning, the organisation tears itself apart.",
+    related: ["scale", "incentives"] },
+
+  { id: "incentives", cat: "science", title: "Incentives",
+    tagline: "Show me the incentive and I’ll show you the outcome.",
+    desc: "Rewards and penalties, visible and hidden, drive behaviour. Short-term incentives often conflict with long-term goals, and badly designed ones backfire.",
+    question: "What is each person actually rewarded for here?",
+    steps: [
+      "List the explicit and hidden rewards in a situation (money, status, approval, ease).",
+      "Predict behaviour from incentives, not stated intentions.",
+      "Redesign incentives to reward the long-term outcome you want."
+    ],
+    insight: "People rarely act against their incentives for long, including you.",
+    related: ["incentive-bias", "second-order"] },
+
+  { id: "min-energy", cat: "science", title: "Minimising Energy Output",
+    tagline: "We default to the path of least resistance.",
+    desc: "Conserving energy is natural and sometimes wise, but it blocks learning. Experience only becomes learning through reflection, which takes effort.",
+    question: "Where is my laziness costing me learning?",
+    steps: [
+      "Notice where you take the easy option by default.",
+      "Spend energy deliberately where it creates value, like reflecting after key events.",
+      "Make the right path the easy path when designing systems for others."
+    ],
+    related: ["inertia", "first-conclusion"] },
+
+  /* ================= SYSTEMS ================= */
+  { id: "feedback-loops", cat: "systems", title: "Feedback Loops",
+    tagline: "Outputs that come back as inputs.",
+    desc: "Feedback lets systems adjust. Reinforcing loops amplify change; balancing loops dampen it. Without feedback a system just repeats itself.",
+    question: "What feedback is this system giving, and who is listening?",
+    steps: [
+      "Notice the feedback you give and receive daily.",
+      "Identify which loops amplify and which stabilise.",
+      "Iterate in small steps and watch the response before changing more."
+    ],
+    insight: "In complex systems, adjusting one loop can affect others in ways that take time to show up.",
+    related: ["equilibrium", "bottlenecks"] },
+
+  { id: "equilibrium", cat: "systems", title: "Equilibrium",
+    tagline: "Balance is temporary.",
+    desc: "Systems move toward balance but rarely stay there. We imagine reaching a stable state (“once X happens I’ll be happy”), but life is constant adjustment.",
+    question: "Am I waiting for a steady state that won’t come?",
+    steps: [
+      "Accept that balance needs constant small corrections.",
+      "Seek stability where it is needed (health, finances).",
+      "Break equilibrium deliberately when stagnation sets in."
+    ],
+    related: ["feedback-loops", "thermodynamics"] },
+
+  { id: "bottlenecks", cat: "systems", title: "Bottlenecks",
+    tagline: "The slowest part sets the pace for everything.",
+    desc: "A system can only move as fast as its narrowest point. Improving anything else is wasted effort. Fix the constraint and the whole system speeds up.",
+    question: "Where does work pile up and wait?",
+    steps: [
+      "Follow the work and find where it queues.",
+      "Focus all improvement on that point.",
+      "Once fixed, find the next constraint."
+    ],
+    insight: "Some bottlenecks are deliberate, like quality checks or security. Remove them only if their purpose is gone.",
+    related: ["friction", "scale"] },
+
+  { id: "scale", cat: "systems", title: "Scale",
+    tagline: "Systems change as they grow or shrink.",
+    desc: "What works for ten doesn’t work for a thousand. Growth brings new problems that didn’t exist at a smaller size, and processes need redesigning.",
+    question: "What breaks if this is ten times bigger?",
+    steps: [
+      "Ask how the process would work at 10x and 100x.",
+      "Identify which parts will strain first.",
+      "Redesign rather than simply multiply."
+    ],
+    related: ["bottlenecks", "hierarchy"] },
+
+  { id: "margin-safety", cat: "systems", title: "Margin of Safety",
+    tagline: "Build a buffer for being wrong.",
+    desc: "A bridge built for ten times its expected load survives surprises. A buffer looks overcautious in good times and is what lets you survive bad ones.",
+    question: "What if I’m wrong? How much buffer do I need?",
+    steps: [
+      "Identify where uncertainty and downside are greatest.",
+      "Add slack: extra time, cash, capacity or redundancy.",
+      "Resist pressure to remove buffers just because nothing has gone wrong yet."
+    ],
+    insight: "Efficiency drives often eat margins of safety first.",
+    related: ["efficiency", "debt"] },
+
+  { id: "churn", cat: "systems", title: "Churn",
+    tagline: "Some turnover is healthy; too much kills.",
+    desc: "Churn quietly drains customers, people or ideas. Yet some replacement keeps a system fresh: new people bring new ideas.",
+    question: "Is this turnover renewing us or bleeding us?",
+    steps: [
+      "Measure churn. It hides until it becomes a crisis.",
+      "Find and fix the causes of unwanted loss.",
+      "Welcome the renewal that healthy turnover brings."
+    ],
+    related: ["thermodynamics", "creative-destruction"] },
+
+  { id: "algorithms", cat: "systems", title: "Algorithms",
+    tagline: "Clear steps that reliably produce a result.",
+    desc: "An algorithm is a recipe of unambiguous if-then steps. Thinking algorithmically means building processes that produce the right output every time.",
+    question: "Could this be turned into a repeatable process?",
+    steps: [
+      "Write the steps that produced a good result.",
+      "Make each step unambiguous with clear if-then rules.",
+      "Test, then refine where it fails."
+    ],
+    related: ["replication", "scale"] },
+
+  { id: "critical-mass", cat: "systems", title: "Critical Mass",
+    tagline: "Slowly, then all at once.",
+    desc: "Systems can sputter for a long time until enough material, people or effort accumulates, then tip into self-sustaining change.",
+    question: "How far are we from the tipping point?",
+    steps: [
+      "Identify what needs to accumulate: users, habits, supporters.",
+      "Keep building even when progress looks invisible.",
+      "Once past the tipping point, keep going to make the change stick."
+    ],
+    related: ["activation-energy", "feedback-loops"] },
+
+  { id: "emergence", cat: "systems", title: "Emergence",
+    tagline: "Combinations create something new.",
+    desc: "When parts interact, new properties appear that none of them had alone. You can’t predict them, but you can create conditions for them.",
+    question: "What new combination could I try?",
+    steps: [
+      "Mix inputs: new skills, people, reading.",
+      "Watch for unexpected results and follow the interesting ones.",
+      "Don’t over-plan. Leave room for surprise."
+    ],
+    related: ["irreducibility", "alloying"] },
+
+  { id: "irreducibility", cat: "systems", title: "Irreducibility",
+    tagline: "Some things can’t be broken into parts.",
+    desc: "Some systems lose their essence when you break them down. To understand them you have to zoom out and accept their messiness.",
+    question: "What is the minimum here that can’t be cut?",
+    steps: [
+      "Identify what truly cannot be simplified away.",
+      "Zoom out to see the whole instead of analysing parts.",
+      "Focus change efforts on what you can actually influence."
+    ],
+    related: ["emergence", "first-principles"] },
+
+  { id: "diminishing", cat: "systems", title: "Diminishing Returns",
+    tagline: "The easy wins come first.",
+    desc: "Each extra unit of effort yields less than the one before. Going from bad to good is easier than going from good to great.",
+    question: "Is the next hour here worth more than an hour elsewhere?",
+    steps: [
+      "Track the gain from each additional effort.",
+      "Notice when returns flatten.",
+      "Move resources to where they’ll make a bigger difference."
+    ],
+    related: ["efficiency", "trade-offs"] },
+
+  /* ================= MATHEMATICS ================= */
+  { id: "sampling", cat: "math", title: "Sampling",
+    tagline: "How much of the world are you looking at?",
+    desc: "Conclusions drawn from small or biased samples are unreliable. Bigger samples get closer to the truth, at a cost of time and money.",
+    question: "How many cases is this based on, and how were they chosen?",
+    steps: [
+      "Check the sample size behind any claim.",
+      "Ask how the sample was selected and what bias might creep in.",
+      "Gather more data before big decisions, within reason."
+    ],
+    related: ["small-samples", "survivorship"] },
+
+  { id: "randomness", cat: "math", title: "Randomness",
+    tagline: "Much of life has no pattern.",
+    desc: "Humans see patterns everywhere and attribute meaning to coincidence. True randomness ignores our theories.",
+    question: "Could this just be chance?",
+    steps: [
+      "Before explaining an outcome, consider luck.",
+      "Look at many outcomes before declaring a pattern.",
+      "Plan for random shocks rather than predicting them."
+    ],
+    related: ["regression", "narrative"] },
+
+  { id: "regression", cat: "math", title: "Regression to the Mean",
+    tagline: "Extremes tend to be followed by the ordinary.",
+    desc: "An exceptional result is usually part skill, part luck. The luck rarely repeats, so the next result tends to be closer to average.",
+    question: "How much of this result was luck?",
+    steps: [
+      "Don’t over-react to one great or terrible result.",
+      "Compare with a longer track record.",
+      "Be careful crediting a fix: things may have just returned to normal."
+    ],
+    related: ["randomness", "survivorship"] },
+
+  { id: "multiply-zero", cat: "math", title: "Multiply by Zero",
+    tagline: "One zero wipes out everything else.",
+    desc: "Any number times zero is zero. One fatal weakness, like unreliability or dishonesty, can cancel out every strength.",
+    question: "What is the zero that could cancel all our efforts?",
+    steps: [
+      "List your strengths, then look for any ‘zero’ that undoes them.",
+      "Fix zeros before adding to strengths.",
+      "Apply the same check to plans, teams and products."
+    ],
+    related: ["margin-safety", "inversion"] },
+
+  { id: "equivalence", cat: "math", title: "Equivalence",
+    tagline: "Different inputs can produce the same result.",
+    desc: "Things can be swapped without changing the essence, and there is usually more than one way to solve a problem. The art is knowing what is truly interchangeable.",
+    question: "Is there another way to get the same result?",
+    steps: [
+      "Define the essential result you need.",
+      "List alternative ways to achieve it.",
+      "Check what is truly interchangeable and what isn’t."
+    ],
+    related: ["first-principles", "trade-offs"] },
+
+  { id: "surface-area", cat: "math", title: "Surface Area",
+    tagline: "More exposure means more interaction, good and bad.",
+    desc: "The more surface area, the more contact with the environment. Exposure to diverse ideas sparks innovation, but also raises vulnerability.",
+    question: "Should I increase or reduce my exposure here?",
+    steps: [
+      "Increase surface area for learning and opportunity.",
+      "Reduce it where you’re vulnerable to risk or distraction.",
+      "Revisit as circumstances change."
+    ],
+    related: ["emergence", "margin-safety"] },
+
+  { id: "maxima", cat: "math", title: "Global and Local Maxima",
+    tagline: "The first peak may not be the highest.",
+    desc: "It is easy to settle on a good-enough solution and stop exploring. Reaching a higher peak may mean going downhill first.",
+    question: "Am I stuck on a local peak?",
+    steps: [
+      "Ask whether you’ve stopped exploring because things are ‘fine’.",
+      "Look at very different alternatives, not small tweaks.",
+      "Accept a short-term dip if the higher peak is worth it."
+    ],
+    related: ["optimization", "creative-destruction"] },
+
+  /* ================= ECONOMICS ================= */
+  { id: "scarcity", cat: "econ", title: "Scarcity",
+    tagline: "Limited things feel more valuable.",
+    desc: "Scarcity drives value and choices. It can also trigger hoarding and self-protection when a culture runs too lean. Rare combinations of good qualities are disproportionately rewarded.",
+    question: "Is scarcity driving my choice, or my values?",
+    steps: [
+      "Notice when “limited” or “exclusive” is pushing you.",
+      "Check if the choice fits your real goals.",
+      "Build scarce value in yourself: a rare mix of skills and character."
+    ],
+    related: ["supply-demand", "alloying"] },
+
+  { id: "supply-demand", cat: "econ", title: "Supply and Demand",
+    tagline: "The push and pull that sets prices.",
+    desc: "Shortages raise prices and attract new supply; gluts lower them and discourage investment. Cycles are driven by human greed and fear as much as by resources.",
+    question: "What is the supply and demand for what I offer?",
+    steps: [
+      "Assess demand for your skills or product.",
+      "Watch for new supply entering the market.",
+      "Use this when negotiating salaries, prices or resources."
+    ],
+    related: ["scarcity", "bubbles"] },
+
+  { id: "optimization", cat: "econ", title: "Optimization",
+    tagline: "Getting the most from limited resources, until it backfires.",
+    desc: "Optimising unlocks potential, but it works until it doesn’t. Over-optimised systems lose flexibility.",
+    question: "Am I optimising the right thing?",
+    steps: [
+      "Define what you’re optimising for.",
+      "Check what you’re sacrificing to get it.",
+      "Know when to stop and leave slack."
+    ],
+    related: ["efficiency", "maxima"] },
+
+  { id: "trade-offs", cat: "econ", title: "Trade-offs & Opportunity Cost",
+    tagline: "Every yes is a no to something else.",
+    desc: "Each choice has a cost: the best alternative you gave up. Good decisions weigh those costs consciously against your priorities.",
+    question: "What am I giving up by choosing this?",
+    steps: [
+      "List the options and the best alternative for each.",
+      "Name the opportunity cost explicitly.",
+      "Choose based on what matters most, not on having it all."
+    ],
+    related: ["specialization", "efficiency"] },
+
+  { id: "specialization", cat: "econ", title: "Specialization",
+    tagline: "Go deep to stand out.",
+    desc: "Narrowing your focus builds mastery and impact, but if the world changes, a specialty can become obsolete. The best insights often come from the edges between fields.",
+    question: "Where should I go deep, and where should I reach out?",
+    steps: [
+      "Choose a field to master.",
+      "Regularly borrow ideas from neighbouring fields.",
+      "Watch for signs that your specialty is losing value."
+    ],
+    related: ["niches", "circle"] },
+
+  { id: "interdependence", cat: "econ", title: "Interdependence",
+    tagline: "No one is self-made.",
+    desc: "People, companies and countries rely on each other. That creates synergy, and exposure if someone critical fails you.",
+    question: "Who do I depend on, and would they hold in a crisis?",
+    steps: [
+      "Map your critical dependencies.",
+      "Build alliances for mutual benefit.",
+      "Have a backup where a single failure would hurt."
+    ],
+    related: ["ecosystems", "cooperation"] },
+
+  { id: "efficiency", cat: "econ", title: "Efficiency",
+    tagline: "Least waste, but not at the cost of resilience.",
+    desc: "Efficiency means doing the right things with little waste. Maximum short-term efficiency often removes the slack that helps you survive shocks.",
+    question: "What resilience am I trading away for efficiency?",
+    steps: [
+      "First make sure the task is worth doing at all.",
+      "Remove waste in what matters most.",
+      "Keep some ‘inefficient’ buffers: cash, inventory, people."
+    ],
+    insight: "Short-run inefficiency is often long-run efficiency, because it lets you adapt.",
+    related: ["margin-safety", "optimization"] },
+
+  { id: "debt", cat: "econ", title: "Debt",
+    tagline: "Leverage now, obligation later.",
+    desc: "Debt of money, favours or sleep lets you act now but makes you fragile. It feels cheap at the time and often costs more than expected.",
+    question: "How much room does this leave me if things go wrong?",
+    steps: [
+      "List all forms of debt you carry, not only financial.",
+      "Borrow only where the gain clearly outweighs the fragility.",
+      "Keep a reserve to absorb shocks."
+    ],
+    related: ["leverage", "margin-safety"] },
+
+  { id: "monopoly", cat: "econ", title: "Monopoly and Competition",
+    tagline: "The pull between dominance and rivalry.",
+    desc: "Competition keeps firms efficient and innovative; monopolies earn the profits to fund big bets but tend to sow their own decline.",
+    question: "Are we competing on price or building something hard to copy?",
+    steps: [
+      "Assess how many alternatives your customers have.",
+      "Build distinctive value rather than racing to the bottom.",
+      "If you dominate, guard against complacency."
+    ],
+    related: ["creative-destruction", "niches"] },
+
+  { id: "creative-destruction", cat: "econ", title: "Creative Destruction",
+    tagline: "The new replaces the old.",
+    desc: "Innovation keeps replacing old products and ways of working. It is opportunity if you’re the challenger and a threat if you’re the incumbent.",
+    question: "What could make what I do obsolete?",
+    steps: [
+      "Identify what could disrupt your work or industry.",
+      "Experiment with the new before you’re forced to.",
+      "Don’t cling to the old just because it served you well."
+    ],
+    related: ["red-queen", "natural-selection"] },
+
+  { id: "gresham", cat: "econ", title: "Gresham’s Law",
+    tagline: "Bad drives out good, without consequences.",
+    desc: "When low and high quality versions compete and nobody pays a price for the bad, the bad spreads: in money, lending, behaviour and culture.",
+    question: "What bad behaviour here faces no consequence?",
+    steps: [
+      "Notice where poor quality is rewarded or tolerated.",
+      "Introduce consequences that favour quality.",
+      "Hold the line yourself. True value wins in the long run."
+    ],
+    related: ["incentives", "fairness"] },
+
+  { id: "bubbles", cat: "econ", title: "Bubbles",
+    tagline: "When excitement outruns value.",
+    desc: "Bubbles form when collective enthusiasm pushes prices or beliefs far above fundamentals, fed by greed and fear of missing out. They always burst.",
+    question: "Am I buying the story or the value?",
+    steps: [
+      "Compare the price or hype with underlying value.",
+      "Notice “this time is different” thinking.",
+      "Decide your exit before you enter."
+    ],
+    insight: "Bubbles also fund real innovation. The infrastructure survives even when investors don’t.",
+    related: ["social-proof", "supply-demand"] },
+
+  /* ================= ART ================= */
+  { id: "audience", cat: "art", title: "Audience",
+    tagline: "Meaning is co-created by the people who receive it.",
+    desc: "Every audience brings its own experience, so the same work means different things to different people. Great creators design for their audience without pandering.",
+    question: "Who is this for, and what will they bring to it?",
+    steps: [
+      "Define your audience specifically.",
+      "Anticipate how they will interpret your message.",
+      "Stay authentic. Let the audience guide, not dictate."
+    ],
+    related: ["framing", "genre"] },
+
+  { id: "genre", cat: "art", title: "Genre",
+    tagline: "Shared expectations that structure an experience.",
+    desc: "Genres are rules that tell an audience what to expect. Too formulaic is dull; too far from the rules loses people. The sweet spot honours expectations while adding something new.",
+    question: "What does my audience expect, and where can I surprise them?",
+    steps: [
+      "Identify the conventions of your format (report, pitch, speech).",
+      "Meet the core expectations.",
+      "Add one fresh element that makes it yours."
+    ],
+    related: ["audience", "contrast"] },
+
+  { id: "contrast", cat: "art", title: "Contrast",
+    tagline: "Difference makes us notice.",
+    desc: "Our brains tune out sameness and snap to attention at change. Quiet makes loud powerful; calm makes drama memorable.",
+    question: "Where can contrast make my key point stand out?",
+    steps: [
+      "Place your key message next to its opposite (before/after, problem/solution).",
+      "Vary pace and tone in presentations.",
+      "Use visual contrast to direct attention."
+    ],
+    related: ["framing", "rhythm"] },
+
+  { id: "framing", cat: "art", title: "Framing",
+    tagline: "How it’s presented changes how it’s understood.",
+    desc: "The same facts framed differently lead to different choices. Frames work quietly and emotionally, and can illuminate or mislead.",
+    question: "How else could this be framed, and who chose this frame?",
+    steps: [
+      "When deciding, reframe the options (gain vs loss, cost vs investment).",
+      "When communicating, choose a frame that is honest and helpful.",
+      "Notice frames others use on you."
+    ],
+    related: ["audience", "narrative"] },
+
+  { id: "rhythm", cat: "art", title: "Rhythm",
+    tagline: "Patterns in time give structure and meaning.",
+    desc: "Rhythm organises music, speech and life. Regular beats give structure; variation keeps it alive. Routines of work and rest are the rhythm of a life.",
+    question: "What rhythm structures my week, and does it serve me?",
+    steps: [
+      "Design regular cycles of work, rest and reflection.",
+      "Use cadence in speech and writing to make ideas stick.",
+      "Vary the beat to avoid monotony."
+    ],
+    related: ["melody", "contrast"] },
+
+  { id: "melody", cat: "art", title: "Melody",
+    tagline: "The thread people remember.",
+    desc: "A melody is a sequence with a shape that feels both inevitable and fresh. The best ones balance the familiar and the new, and connect emotionally across cultures.",
+    question: "What is the memorable line people will carry away?",
+    steps: [
+      "Find the one idea you want remembered.",
+      "Give it a shape: build, peak, resolve.",
+      "Balance familiar elements with one surprise."
+    ],
+    related: ["rhythm", "narrative"] },
+
+  { id: "plot", cat: "art", title: "Plot",
+    tagline: "Change the story to change the results.",
+    desc: "A plot is a chain of cause and effect driven by conflict: someone wants something and faces obstacles. The most powerful story is the one you tell yourself about your challenges.",
+    question: "What story am I telling myself about this obstacle?",
+    steps: [
+      "Write down the story you currently tell about a challenge.",
+      "Check it against the facts.",
+      "Rewrite it in a way that is true and moves you forward."
+    ],
+    related: ["character", "narrative"] },
+
+  { id: "character", cat: "art", title: "Character",
+    tagline: "Obstacles reveal who we are.",
+    desc: "Character shapes choices, and choices shape destiny. Characters aren’t fixed: they grow through what they face. Understanding someone’s character helps you predict and empathise.",
+    question: "Is this choice a step toward the person I want to be?",
+    steps: [
+      "Define the character you want to build.",
+      "Treat each obstacle as a choice toward or away from it.",
+      "Use the same lens to understand others’ motives."
+    ],
+    related: ["plot", "fae"] },
+
+  { id: "setting", cat: "art", title: "Setting",
+    tagline: "Change your environment, or it will change you.",
+    desc: "Context shapes what is possible and what we do. Our surroundings influence behaviour more than we realise.",
+    question: "What in my environment is pushing me the wrong way?",
+    steps: [
+      "Audit your physical, social and digital environment.",
+      "Remove cues that trigger unwanted behaviour.",
+      "Add cues that make the right behaviour easy."
+    ],
+    related: ["inertia", "social-proof"] },
+
+  { id: "performance", cat: "art", title: "Performance",
+    tagline: "Live moments are co-created and can’t be repeated.",
+    desc: "Performance exists in the moment, shaped by presence, chance and the audience’s energy. It rewards responsiveness over perfection.",
+    question: "How can I be fully present and responsive here?",
+    steps: [
+      "Prepare well, then let go of perfection.",
+      "Read the room and adapt in real time.",
+      "Invite the audience to participate."
+    ],
+    related: ["audience", "rhythm"] },
+
+  /* ================= MILITARY & STRATEGY ================= */
+  { id: "seeing-front", cat: "military", title: "Seeing the Front",
+    tagline: "Go and see for yourself.",
+    desc: "Leaders who personally visit the front line get first-hand information instead of filtered reports, and improve the quality of the reports they get too.",
+    question: "When did I last see this first-hand?",
+    steps: [
+      "Schedule time where the work actually happens.",
+      "Talk to the people doing it, not just their managers.",
+      "Compare what you see with what reports say."
+    ],
+    related: ["map-territory", "incentive-bias"] },
+
+  { id: "asymmetric", cat: "military", title: "Asymmetric Warfare",
+    tagline: "When you can’t out-muscle, change the rules.",
+    desc: "A weaker side wins by using different tactics from the stronger one, creating impact disproportionate to its resources.",
+    question: "Where can a different approach beat superior resources?",
+    steps: [
+      "List where a stronger rival is slow or rigid.",
+      "Compete on speed, focus or niche rather than size.",
+      "If you’re the bigger side, watch for opponents playing by different rules."
+    ],
+    related: ["niches", "counterinsurgency"] },
+
+  { id: "two-front", cat: "military", title: "Two-Front War",
+    tagline: "Splitting focus weakens you on both fronts.",
+    desc: "Fighting on two fronts divides resources. It can be used against a rival, or avoided by settling internal conflict to focus on the real competition.",
+    question: "Am I fighting battles on more fronts than I can win?",
+    steps: [
+      "List the battles you’re currently fighting.",
+      "Close or pause the less important fronts.",
+      "Settle internal disputes before taking on external ones."
+    ],
+    related: ["trade-offs", "bottlenecks"] },
+
+  { id: "counterinsurgency", cat: "military", title: "Counterinsurgency",
+    tagline: "Answer unconventional threats with smarter strategy, not more force.",
+    desc: "Insurgents use asymmetric tactics; effective responses change strategy rather than simply escalating. Tit-for-tat escalation can trap both sides.",
+    question: "Is escalation feeding the problem?",
+    steps: [
+      "Understand why the opposing side is gaining support.",
+      "Address root causes rather than symptoms.",
+      "Avoid tit-for-tat cycles."
+    ],
+    related: ["asymmetric", "feedback-loops"] },
+
+  { id: "mad", cat: "military", title: "Mutually Assured Destruction",
+    tagline: "When both sides can destroy each other, neither attacks.",
+    desc: "Strong opponents often avoid all-out conflict because it would ruin both, as in price wars between rivals. But when a mistake happens, the damage is catastrophic.",
+    question: "What keeps both sides from escalating, and what if that fails?",
+    steps: [
+      "Recognise standoffs where escalation hurts everyone.",
+      "Keep channels open to avoid accidental escalation.",
+      "Plan for the rare but extreme downside."
+    ],
+    related: ["two-front", "margin-safety"] },
+
+  /* ================= HUMAN NATURE & JUDGMENT ================= */
+  { id: "trust", cat: "human", title: "Trust",
+    tagline: "The modern world runs on trust.",
+    desc: "We trust strangers every day: drivers, cooks, colleagues. Trusting systems run efficiently, and the rewards of trust are huge.",
+    question: "Where would more trust make this faster and cheaper?",
+    steps: [
+      "Be reliable so others can trust you.",
+      "Extend trust deliberately, with sensible checks.",
+      "Protect trust. It takes long to build and seconds to lose."
+    ],
+    related: ["reciprocity", "cooperation"] },
+
+  { id: "incentive-bias", cat: "human", title: "Bias from Incentives",
+    tagline: "We believe what pays us to believe.",
+    desc: "Incentives don’t just change behaviour, they bend sincere thinking. A salesperson genuinely believes in the product partly because they sell it.",
+    question: "What would this advisor gain if I agree?",
+    steps: [
+      "Ask how the person giving advice is paid or rewarded.",
+      "Apply the same check to your own conclusions.",
+      "Seek opinions from people with no stake."
+    ],
+    related: ["incentives", "confirmation"] },
+
+  { id: "pavlovian", cat: "human", title: "Pavlovian Association",
+    tagline: "We react to associations, not just facts.",
+    desc: "Like Pavlov’s dogs, we feel positive or negative emotions toward things based on past associations rather than their actual effects.",
+    question: "Am I reacting to this, or to what it reminds me of?",
+    steps: [
+      "Notice strong gut reactions.",
+      "Trace them to past associations.",
+      "Judge the current situation on its own merits."
+    ],
+    related: ["liking", "framing"] },
+
+  { id: "envy", cat: "human", title: "Envy & Jealousy",
+    tagline: "Comparison drives irrational behaviour.",
+    desc: "People resent others getting more than them, strongly enough to act against their own interests. Systems that ignore envy tend to self-destruct.",
+    question: "Is envy (mine or others’) shaping this decision?",
+    steps: [
+      "Notice when comparison triggers your reactions.",
+      "Design rewards and policies with perceived fairness in mind.",
+      "Compare yourself with your past self, not others."
+    ],
+    related: ["relative-satisfaction", "fairness"] },
+
+  { id: "liking", cat: "human", title: "Liking & Disliking Bias",
+    tagline: "We overrate what we like and underrate what we don’t.",
+    desc: "Affection and dislike distort judgment of people and ideas, making us miss nuance and important information.",
+    question: "Would I judge this differently if someone I disliked proposed it?",
+    steps: [
+      "Swap the messenger in your head and re-judge the message.",
+      "Ask someone neutral for their view.",
+      "Look for the strengths in what you dislike, and the flaws in what you like."
+    ],
+    related: ["pavlovian", "confirmation"] },
+
+  { id: "denial", cat: "human", title: "Denial",
+    tagline: "Refusing to see an uncomfortable reality.",
+    desc: "Denial protects us from painful truths and keeps behaviour unchanged, sometimes with destructive results.",
+    question: "What am I avoiding looking at?",
+    steps: [
+      "Name the fact you least want to be true.",
+      "Look for evidence on it directly.",
+      "Ask a trusted person to tell you what they see."
+    ],
+    related: ["self-preservation", "confirmation"] },
+
+  { id: "availability", cat: "human", title: "Availability Heuristic",
+    tagline: "We overweight what comes easily to mind.",
+    desc: "Recent, vivid and frequent things feel more important and likely than they are. Anchoring and sunk-cost effects are related.",
+    question: "Is this likely, or just memorable?",
+    steps: [
+      "Check data rather than memorable examples.",
+      "Notice recency: what just happened colours judgment.",
+      "Write down considerations before deciding, so less obvious ones get a fair hearing."
+    ],
+    related: ["representativeness", "small-samples"] },
+
+  { id: "representativeness", cat: "human", title: "Representativeness Heuristic",
+    tagline: "Judging by resemblance instead of odds.",
+    desc: "Three errors: ignoring base rates, stereotyping instead of looking at specifics, and believing a vivid, specific scenario is more likely than a broader one.",
+    question: "How often does this happen in general?",
+    steps: [
+      "Start from the base rate before considering specifics.",
+      "Look at the individual case, not the category.",
+      "Remember: adding details makes a story more vivid but less probable."
+    ],
+    related: ["probabilistic", "availability"] },
+
+  { id: "social-proof", cat: "human", title: "Social Proof",
+    tagline: "We do what others around us do.",
+    desc: "Following the group is a deep instinct that enables cooperation and culture, and leads us into foolish behaviour when the group is wrong.",
+    question: "Would I do this if nobody else were doing it?",
+    steps: [
+      "Separate the evidence from the crowd’s enthusiasm.",
+      "Seek out people who disagree.",
+      "Use social proof positively: show others the behaviour you want."
+    ],
+    related: ["bubbles", "setting"] },
+
+  { id: "narrative", cat: "human", title: "Narrative Instinct",
+    tagline: "We think in stories.",
+    desc: "Humans are storytelling animals; organisations and nations run on shared narratives. Stories help us make meaning, and also make us see causes that aren’t there.",
+    question: "Is this a true explanation or just a good story?",
+    steps: [
+      "Use stories to communicate important ideas.",
+      "Be sceptical of neat explanations for messy events.",
+      "Check stories against data."
+    ],
+    related: ["plot", "hindsight"] },
+
+  { id: "curiosity", cat: "human", title: "Curiosity Instinct",
+    tagline: "The urge to explore and understand.",
+    desc: "Curiosity drove humans to explore and created science itself. It leads to innovation even without direct rewards.",
+    question: "What would I explore here if no one was measuring?",
+    steps: [
+      "Protect time for open-ended exploration.",
+      "Ask “why?” and “how does this work?” more often.",
+      "Reward curiosity in others."
+    ],
+    related: ["surface-area", "emergence"] },
+
+  { id: "language", cat: "human", title: "Language Instinct",
+    tagline: "Language builds shared worlds.",
+    desc: "We are wired to learn grammatical language, and with it we create shared stories, solve problems, gossip and fight. Words shape how we think together.",
+    question: "Are we using the same words to mean the same things?",
+    steps: [
+      "Define key terms when working with others.",
+      "Choose words carefully. They shape how ideas are understood.",
+      "Listen for the stories a group tells about itself."
+    ],
+    related: ["narrative", "framing"] },
+
+  { id: "first-conclusion", cat: "human", title: "First-Conclusion Bias",
+    tagline: "The first idea in tends to shut the door.",
+    desc: "Once the mind settles on an answer, it stops searching. That saves energy and leads us to accept many wrong answers.",
+    question: "What were the other possible conclusions?",
+    steps: [
+      "Generate at least three explanations before choosing.",
+      "Delay judgment on important decisions.",
+      "Ask someone to argue the opposite."
+    ],
+    related: ["confirmation", "commitment"] },
+
+  { id: "small-samples", cat: "human", title: "Overgeneralising from Small Samples",
+    tagline: "A few cases aren’t a rule.",
+    desc: "Generalising is useful, but we often build broad conclusions from a handful of examples, forgetting the law of large numbers.",
+    question: "How many examples is this conclusion based on?",
+    steps: [
+      "Count the cases behind your belief.",
+      "Look for counter-examples.",
+      "Hold conclusions loosely until the sample grows."
+    ],
+    related: ["sampling", "availability"] },
+
+  { id: "relative-satisfaction", cat: "human", title: "Relative Satisfaction",
+    tagline: "Happiness is measured against others and our past.",
+    desc: "We judge our situation relative to peers or our own past, not in absolute terms. This makes us poor predictors of what will make us happy.",
+    question: "Compared to what am I judging this?",
+    steps: [
+      "Notice your reference point.",
+      "Choose reference points deliberately (your past self, your values).",
+      "Be sceptical of predictions that “X will make me happy”."
+    ],
+    related: ["envy", "equilibrium"] },
+
+  { id: "commitment", cat: "human", title: "Commitment & Consistency Bias",
+    tagline: "We stick to what we’ve already said.",
+    desc: "Staying consistent builds trust, but combined with first-conclusion bias it keeps us defending poor answers in the face of evidence.",
+    question: "If I were starting fresh today, would I choose this?",
+    steps: [
+      "Revisit past commitments as if they were new decisions.",
+      "Make it normal to change your mind when facts change.",
+      "Be careful of public commitments made early."
+    ],
+    related: ["first-conclusion", "confirmation"] },
+
+  { id: "hindsight", cat: "human", title: "Hindsight Bias",
+    tagline: "“I knew it all along.” You didn’t.",
+    desc: "Once we know the outcome, we can’t unknow it, and we rewrite what we believed before. That stops us learning from decisions.",
+    question: "What did I actually believe before I knew the outcome?",
+    steps: [
+      "Keep a decision journal: what you expected and why.",
+      "Review decisions against what was knowable at the time.",
+      "Judge decisions by process, not just outcome."
+    ],
+    related: ["narrative", "regression"] },
+
+  { id: "fairness", cat: "human", title: "Sensitivity to Fairness",
+    tagline: "People react strongly to unfairness.",
+    desc: "We are careful judges of fairness, and violations trigger retaliation or distrust. What counts as fair shifts across times and cultures.",
+    question: "How will this look to the people on the receiving end?",
+    steps: [
+      "Check decisions for perceived fairness, not just logic.",
+      "Explain the reasons behind outcomes openly.",
+      "Remember fairness standards differ between groups."
+    ],
+    related: ["envy", "reciprocity"] },
+
+  { id: "fae", cat: "human", title: "Fundamental Attribution Error",
+    tagline: "Blaming character instead of circumstances.",
+    desc: "We over-attribute others’ behaviour to fixed traits and ignore their situation, then are surprised when they behave differently.",
+    question: "What situation might explain this behaviour?",
+    steps: [
+      "List situational factors before judging someone’s character.",
+      "Notice you explain your own behaviour by circumstances. Extend others the same.",
+      "Change the situation before trying to change the person."
+    ],
+    related: ["hanlon", "character"] },
+
+  { id: "stress", cat: "human", title: "Influence of Stress",
+    tagline: "Stress amplifies every other bias.",
+    desc: "Under stress we fall back on instinct and habit and lose careful reasoning. You don’t rise to your expectations; you fall to your level of training.",
+    question: "Am I too stressed to think clearly right now?",
+    steps: [
+      "Recognise your stress signals.",
+      "Delay major decisions until calmer, if possible.",
+      "Train and rehearse in advance so habits are good ones."
+    ],
+    related: ["do-something", "first-conclusion"] },
+
+  { id: "survivorship", cat: "human", title: "Survivorship Bias",
+    tagline: "We only see the winners.",
+    desc: "History is written by the survivors. We study the successful and miss the many who did the same things and failed, so we learn false lessons.",
+    question: "Who tried this and failed, and why don’t I hear about them?",
+    steps: [
+      "Look for the failures that used the same strategy.",
+      "Ask how much of the success was luck.",
+      "Be wary of advice drawn only from winners."
+    ],
+    related: ["sampling", "regression"] },
+
+  { id: "do-something", cat: "human", title: "Do-Something Syndrome",
+    tagline: "The urge to act, even when action isn’t needed.",
+    desc: "We feel a strong need to act and to show value, even when doing nothing is better or when we don’t understand the problem.",
+    question: "What happens if I do nothing?",
+    steps: [
+      "Consider ‘do nothing’ as a real option.",
+      "Wait for more information when stakes allow.",
+      "Act only where you understand the problem."
+    ],
+    related: ["ecosystems", "stress"] },
+
+  { id: "confirmation", cat: "human", title: "Confirmation Bias & Falsification",
+    tagline: "We see what we already believe.",
+    desc: "We look for evidence that supports our beliefs and ignore what contradicts them. Science works because it actively tries to prove ideas wrong.",
+    question: "What evidence would prove me wrong?",
+    steps: [
+      "State the evidence that would change your mind.",
+      "Go looking for it actively.",
+      "Be suspicious of beliefs that can’t be disproven."
+    ],
+    related: ["first-conclusion", "commitment"] }
 ];
